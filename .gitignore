@@ -1,0 +1,9 @@
+.DS_Store
+Thumbs.db
+
+**/.cache/
+**/build/cache/
+**/.parcel-cache/
+
+**/.vscode/
+**/node_modules/

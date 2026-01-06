@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Highway Gothic Narrow";
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url("/fonts/HWYGNRRW.woff2") format("woff2");
+}
+
+:root {
+  --font-hwy-gothic-narrow: "Highway Gothic Narrow", system-ui, sans-serif;
+}
+
+@theme {
+  --font-family-hwy-gothic-narrow: var(--font-hwy-gothic-narrow);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
