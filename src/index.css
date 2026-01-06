@@ -5,7 +5,7 @@
   font-style: normal;
   font-weight: 200;
   font-display: swap;
-  src: url("/fonts/HWYGNRRW.woff2") format("woff2");
+  src: url("./fonts/HWYGNRRW.woff2") format("woff2");
 }
 
 :root {
