@@ -286,7 +286,7 @@
   font-style: normal;
   font-weight: 200;
   font-display: swap;
-  src: url("/fonts/HWYGNRRW.woff2") format("woff2");
+  src: url("./fonts/HWYGNRRW.woff2") format("woff2");
 }
 :root {
   --font-hwy-gothic-narrow: "Highway Gothic Narrow", system-ui, sans-serif;
