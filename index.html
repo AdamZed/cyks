@@ -1,37 +1,39 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en-US">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="./css/index.css" />
+    <script src="src/index.js"></script>
+
     <title>Can you keep score?</title>
   </head>
 
   <body class="bg-gray-800">
-    <table class="table-fixed w-screen h-screen text-center">
+    <table class="h-screen w-screen table-fixed text-center">
       <tr class="">
         <td
           rowspan="5"
-          class="text-[40vw]/0.5 font-family-hwy-gothic-narrow p-0 bg-amber-500"
+          class="font-family-hwy-gothic-narrow bg-amber-500 p-0 text-[40vw]/0.5"
         >
           <p onclick="getSetScore(1)" id="score-t1-l">0</p>
         </td>
         <td
           rowspan="5"
-          class="text-[40vw]/0.5 font-family-hwy-gothic-narrow p-0 bg-amber-500"
+          class="font-family-hwy-gothic-narrow bg-amber-500 p-0 text-[40vw]/0.5"
         >
           <p onclick="getSetScore(1)" id="score-t1-r">0</p>
         </td>
         <td></td>
         <td
           rowspan="5"
-          class="text-[40vw]/0.5 font-family-hwy-gothic-narrow p-0 bg-blue-700"
+          class="font-family-hwy-gothic-narrow bg-blue-700 p-0 text-[40vw]/0.5"
         >
           <p onclick="getSetScore(2)" id="score-t2-l">0</p>
         </td>
         <td
           rowspan="5"
-          class="text-[40vw]/0.5 font-family-hwy-gothic-narrow p-0 bg-blue-700"
+          class="font-family-hwy-gothic-narrow bg-blue-700 p-0 text-[40vw]/0.5"
         >
           <p onclick="getSetScore(2)" id="score-t2-r">0</p>
         </td>
@@ -40,7 +42,7 @@
         <td rowspan="2" class="flex justify-center">
           <p
             onclick="playWhistle()"
-            class="w-[90%] flex justify-center align-middle bg-green-600 rounded"
+            class="flex w-[90%] justify-center rounded bg-green-600 align-middle"
           >
             <img class="w-[80%] p-2" src="./icons/whistle.svg" />
           </p>
@@ -52,7 +54,7 @@
         <td class="flex justify-center">
           <p
             onclick="showSettings()"
-            class="w-[50%] flex justify-center align-middle bg-violet-400 rounded"
+            class="flex w-[50%] justify-center rounded bg-violet-400 align-middle"
           >
             <img class="w-[70%] p-2" src="./icons/settings.svg" />
           </p>
@@ -62,7 +64,7 @@
         <td onclick="decScore(1)" class="bg-amber-500">
           <p
             id="score-t1-m"
-            class="mx-[6vw] text-[3vw] font-bold p-3 rounded bg-amber-600"
+            class="mx-[6vw] rounded bg-amber-600 p-3 text-[3vw] font-bold"
           >
             -
           </p>
@@ -70,7 +72,7 @@
         <td onclick="incScore(1)" class="bg-amber-500">
           <p
             id="score-t1-p"
-            class="mx-[6vw] text-[3vw] font-bold p-3 rounded bg-amber-600"
+            class="mx-[6vw] rounded bg-amber-600 p-3 text-[3vw] font-bold"
           >
             +
           </p>
@@ -78,7 +80,7 @@
         <td class="flex justify-center">
           <p
             onclick="reset()"
-            class="w-[50%] flex justify-center align-middle bg-red-700 rounded"
+            class="flex w-[50%] justify-center rounded bg-red-700 align-middle"
           >
             <img class="w-[70%] p-2" src="./icons/reset.svg" />
           </p>
@@ -86,7 +88,7 @@
         <td onclick="decScore(2)" class="bg-blue-700">
           <p
             id="score-t2-m"
-            class="mx-[6vw] text-[3vw] font-bold p-3 rounded bg-blue-800"
+            class="mx-[6vw] rounded bg-blue-800 p-3 text-[3vw] font-bold"
           >
             -
           </p>
@@ -94,7 +96,7 @@
         <td onclick="incScore(2)" class="bg-blue-700">
           <p
             id="score-t2-p"
-            class="mx-[6vw] text-[3vw] font-bold p-3 rounded bg-blue-800"
+            class="mx-[6vw] rounded bg-blue-800 p-3 text-[3vw] font-bold"
           >
             +
           </p>
@@ -103,38 +105,38 @@
     </table>
 
     <script>
-      var score = [0, 0];
+      var score = [0, 0]
 
       function reset() {
-        setScore(1, 0);
-        setScore(2, 0);
+        setScore(1, 0)
+        setScore(2, 0)
       }
       function getSetScore(team) {
-        let s = prompt(`Enter score for Team ${team}`);
-        if (s == null) return;
-        setScore(team, s);
+        let s = prompt(`Enter score for Team ${team}`)
+        if (s == null) return
+        setScore(team, s)
       }
       function setScore(team, s) {
-        if (!Number.isInteger(Number(s)) || s < 0 || s > 99) return;
+        if (!Number.isInteger(Number(s)) || s < 0 || s > 99) return
 
-        score[team - 1] = Number(s);
+        score[team - 1] = Number(s)
         document.getElementById(`score-t${team}-l`).innerHTML = Math.floor(
-          s / 10
-        );
-        document.getElementById(`score-t${team}-r`).innerHTML = s % 10;
+          s / 10,
+        )
+        document.getElementById(`score-t${team}-r`).innerHTML = s % 10
       }
       function incScore(team) {
-        setScore(team, ++score[team - 1]);
+        setScore(team, ++score[team - 1])
       }
       function decScore(team) {
-        setScore(team, --score[team - 1]);
+        setScore(team, --score[team - 1])
       }
 
       function playWhistle() {
-        alert("Whistle sound (coming soon)");
+        alert('Whistle sound (coming soon)')
       }
       function showSettings() {
-        alert("There are no settings yet");
+        alert('There are no settings yet')
       }
     </script>
   </body>

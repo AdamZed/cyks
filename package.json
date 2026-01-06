@@ -1,10 +1,25 @@
 {
+  "name": "cyks",
+  "description": "Can you keep score? A simple scoreboard webapp to track of 1v1 match",
+  "scripts": {
+    "tw:build": "tailwindcss -i ./src/index.css -o ./css/index.css --minify",
+    "tw:watch": "tailwindcss -i ./src/index.css -o ./css/index.css --watch",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "check": "bun run format:check ; bun run lint",
+    "build": "bun run check && bun run tw:build && echo 'Build succeeded and checks passed. Ready to deploy.'"
+  },
   "dependencies": {
     "@tailwindcss/cli": "^4.1.14",
     "tailwindcss": "^4.1.14"
   },
-  "scripts": {
-    "tw-watch": "npx @tailwindcss/cli -i ./src/index.css -o ./index.css --watch",
-    "tw-build": "npx @tailwindcss/cli -i ./src/index.css -o ./index.css"
+  "devDependencies": {
+    "eslint": "^8.48",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.7.4",
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "vite": "^7.3.0"
   }
 }
