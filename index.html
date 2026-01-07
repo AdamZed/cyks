@@ -16,6 +16,7 @@
       content="scoreboard, scoreboard app, volleyball, soccer, whistle, music, score"
     />
     <meta name="author" content="Adam Zanon" />
+    <meta name="theme-color" content="#E6A23B" />
 
     <meta property="og:title" content="Can you keep score?" />
     <meta
@@ -26,9 +27,16 @@
     <meta property="og:image" content="./imgs/preview.png" />
     <meta property="og:url" content="https://your-site.com" />
 
-    <link rel="icon" href="./favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="./imgs/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="./css/index.css" />
+    <link rel="manifest" href="./manifest.json" />
+
     <script src="./src/index.js"></script>
+    <script defer>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js')
+      }
+    </script>
 
     <link
       rel="preload"

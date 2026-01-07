@@ -1,0 +1,20 @@
+{
+  "name": "Can you keep score?",
+  "short_name": "CYKS",
+  "start_url": "/cyks/index.html",
+  "display": "standalone",
+  "background_color": "#E6A23B",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/cyks/imgs/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/cyks/imgs/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
