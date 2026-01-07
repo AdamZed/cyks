@@ -2,11 +2,48 @@
 <html lang="en-US">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="stylesheet" href="./css/index.css" />
-    <script src="src/index.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Can you keep score?</title>
+
+    <meta
+      name="description"
+      content="A simple team vs team scoreboard webapp."
+    />
+    <meta
+      name="keywords"
+      content="scoreboard, scoreboard app, volleyball, soccer, whistle, music, score"
+    />
+    <meta name="author" content="Adam Zanon" />
+
+    <meta property="og:title" content="Can you keep score?" />
+    <meta
+      property="og:description"
+      content="A simple and elegant scoreboard app built with Tailwind CSS."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="./imgs/preview.png" />
+    <meta property="og:url" content="https://your-site.com" />
+
+    <link rel="icon" href="./favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/index.css" />
+    <script src="./src/index.js"></script>
+
+    <link
+      rel="preload"
+      href="./fonts/HWYGNRRW.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="preload" href="./imgs/reset.svg" as="image" />
+    <link rel="preload" href="./imgs/settings.svg" as="image" />
+    <link rel="preload" href="./imgs/whistle.svg" as="image" />
+
+    <noscript>
+      <link rel="stylesheet" href="./css/index.css" />
+    </noscript>
   </head>
 
   <body class="bg-gray-800">
@@ -14,37 +51,45 @@
       <tr class="">
         <td
           rowspan="5"
-          class="font-family-hwy-gothic-narrow bg-amber-500 p-0 text-[40vw]/0.5"
+          style="background: hsl(38, 90%, 50%)"
+          col-idx="1:1"
+          class="font-family-hwy-gothic-narrow p-0 text-[40vw]/0.5"
         >
-          <p onclick="getSetScore(1)" id="score-t1-l">0</p>
+          <p onclick="openScoreSet(1)" id="score-t1-l" col-idx="1:0">0</p>
         </td>
         <td
           rowspan="5"
-          class="font-family-hwy-gothic-narrow bg-amber-500 p-0 text-[40vw]/0.5"
+          style="background: hsl(38, 90%, 50%)"
+          col-idx="1:1"
+          class="font-family-hwy-gothic-narrow p-0 text-[40vw]/0.5"
         >
-          <p onclick="getSetScore(1)" id="score-t1-r">0</p>
+          <p onclick="openScoreSet(1)" id="score-t1-r" col-idx="1:0">0</p>
         </td>
         <td></td>
         <td
           rowspan="5"
-          class="font-family-hwy-gothic-narrow bg-blue-700 p-0 text-[40vw]/0.5"
+          style="background: hsl(220, 95%, 50%)"
+          col-idx="2:1"
+          class="font-family-hwy-gothic-narrow p-0 text-[40vw]/0.5"
         >
-          <p onclick="getSetScore(2)" id="score-t2-l">0</p>
+          <p onclick="openScoreSet(2)" id="score-t2-l" col-idx="2:0">0</p>
         </td>
         <td
           rowspan="5"
-          class="font-family-hwy-gothic-narrow bg-blue-700 p-0 text-[40vw]/0.5"
+          style="background: hsl(220, 95%, 50%)"
+          col-idx="2:1"
+          class="font-family-hwy-gothic-narrow p-0 text-[40vw]/0.5"
         >
-          <p onclick="getSetScore(2)" id="score-t2-r">0</p>
+          <p onclick="openScoreSet(2)" id="score-t2-r" col-idx="2:0">0</p>
         </td>
       </tr>
       <tr class="">
         <td rowspan="2" class="flex justify-center">
           <p
             onclick="playWhistle()"
-            class="flex w-[90%] justify-center rounded bg-green-600 align-middle"
+            class="flex w-[90%] items-center justify-center rounded-2xl bg-green-600"
           >
-            <img class="w-[80%] p-2" src="./icons/whistle.svg" />
+            <img class="w-[80%] p-2" src="./imgs/whistle.svg" />
           </p>
         </td>
       </tr>
@@ -54,25 +99,37 @@
         <td class="flex justify-center">
           <p
             onclick="showSettings()"
-            class="flex w-[50%] justify-center rounded bg-violet-400 align-middle"
+            class="flex w-[50%] items-center justify-center rounded-xl bg-violet-400 hover:cursor-pointer"
           >
-            <img class="w-[70%] p-2" src="./icons/settings.svg" />
+            <img class="w-[70%] p-2" src="./imgs/settings.svg" />
           </p>
         </td>
       </tr>
       <tr class="">
-        <td onclick="decScore(1)" class="bg-amber-500">
+        <td
+          onclick="decScore(1)"
+          style="background: hsl(38, 90%, 50%)"
+          col-idx="1:1"
+        >
           <p
             id="score-t1-m"
-            class="mx-[6vw] rounded bg-amber-600 p-3 text-[3vw] font-bold"
+            style="background: hsl(38, 90%, 40%)"
+            col-idx="1:2"
+            class="mx-[6vw] rounded-xl p-3 text-[3vw] font-bold hover:cursor-pointer"
           >
             -
           </p>
         </td>
-        <td onclick="incScore(1)" class="bg-amber-500">
+        <td
+          onclick="incScore(1)"
+          style="background: hsl(38, 90%, 50%)"
+          col-idx="1:1"
+        >
           <p
             id="score-t1-p"
-            class="mx-[6vw] rounded bg-amber-600 p-3 text-[3vw] font-bold"
+            style="background: hsl(38, 90%, 40%)"
+            col-idx="1:2"
+            class="mx-[6vw] rounded-xl p-3 text-[3vw] font-bold hover:cursor-pointer"
           >
             +
           </p>
@@ -80,64 +137,144 @@
         <td class="flex justify-center">
           <p
             onclick="reset()"
-            class="flex w-[50%] justify-center rounded bg-red-700 align-middle"
+            class="flex w-[50%] items-center justify-center rounded-xl bg-red-700 hover:cursor-pointer"
           >
-            <img class="w-[70%] p-2" src="./icons/reset.svg" />
+            <img class="w-[70%] p-2" src="./imgs/reset.svg" />
           </p>
         </td>
-        <td onclick="decScore(2)" class="bg-blue-700">
+        <td
+          onclick="decScore(2)"
+          style="background: hsl(220, 95%, 50%)"
+          col-idx="2:1"
+        >
           <p
             id="score-t2-m"
-            class="mx-[6vw] rounded bg-blue-800 p-3 text-[3vw] font-bold"
+            style="background: hsl(220, 95%, 40%)"
+            col-idx="2:2"
+            class="mx-[6vw] rounded-xl p-3 text-[3vw] font-bold hover:cursor-pointer"
           >
             -
           </p>
         </td>
-        <td onclick="incScore(2)" class="bg-blue-700">
+        <td
+          onclick="incScore(2)"
+          style="background: hsl(220, 95%, 50%)"
+          col-idx="2:1"
+        >
           <p
             id="score-t2-p"
-            class="mx-[6vw] rounded bg-blue-800 p-3 text-[3vw] font-bold"
+            style="background: hsl(220, 95%, 40%)"
+            col-idx="2:2"
+            class="mx-[6vw] rounded-xl p-3 text-[3vw] font-bold hover:cursor-pointer"
           >
             +
           </p>
         </td>
       </tr>
     </table>
+    <div
+      id="score-set"
+      class="absolute top-0 left-0 hidden h-full w-full items-center justify-center bg-black/80"
+    >
+      <div
+        class="flex h-64 w-md flex-col items-center justify-center gap-8 rounded-4xl bg-gray-900 p-10 shadow-2xl shadow-black"
+      >
+        <h2 class="block text-3xl text-white">Enter Score</h2>
+        <input
+          id="score-set-in"
+          class="w-32 bg-white text-center text-3xl"
+          type="number"
+          min="0"
+          max="99"
+          inputmode="numeric"
+          pattern="[0-9]*"
+        />
+        <div class="flex gap-2">
+          <button
+            class="button w-24 rounded bg-gray-600 px-5 text-2xl text-white hover:cursor-pointer"
+            onclick="closeScoreSet()"
+          >
+            Close
+          </button>
+          <button
+            class="button w-24 rounded bg-gray-400 px-5 text-2xl hover:cursor-pointer"
+            onclick="confirmScoreSet()"
+          >
+            Set
+          </button>
+        </div>
+      </div>
+    </div>
 
-    <script>
-      var score = [0, 0]
+    <div
+      id="settings"
+      class="absolute top-0 left-0 hidden h-full w-full items-center justify-center bg-black/80"
+    >
+      <div
+        class="flex h-72 w-md flex-col items-center justify-center gap-4 overflow-scroll rounded-4xl bg-gray-900 p-10 text-white shadow-2xl shadow-black"
+      >
+        <h2 class="mt-16 block text-3xl text-white">Settings</h2>
+        <div class="flex w-56 justify-baseline gap-5">
+          <input
+            id="col-t1-bg"
+            name="col-t1-bg"
+            type="color"
+            onchange="setTeamCol(this.value, 1, 1)"
+          />
+          <label for="col-t1-bg">Team 1 Colour</label>
+        </div>
+        <div class="flex w-56 justify-baseline gap-5">
+          <input
+            id="col-t1"
+            name="col-t1"
+            type="color"
+            onchange="setTeamCol(this.value, 1, 2)"
+          />
+          <label for="col-t1">Team 1 Text Colour</label>
+        </div>
+        <div class="flex w-56 justify-baseline gap-5">
+          <input
+            id="col-t2-bg"
+            name="col-t2-bg"
+            type="color"
+            onchange="setTeamCol(this.value, 2, 1)"
+          />
+          <label for="col-t2-bg">Team 2 Colour</label>
+        </div>
+        <div class="flex w-56 justify-baseline gap-5">
+          <input
+            id="col-t2"
+            name="col-t2"
+            type="color"
+            onchange="setTeamCol(this.value, 2, 2)"
+          />
+          <label for="col-t2">Team 2 Text Colour</label>
+        </div>
 
-      function reset() {
-        setScore(1, 0)
-        setScore(2, 0)
-      }
-      function getSetScore(team) {
-        let s = prompt(`Enter score for Team ${team}`)
-        if (s == null) return
-        setScore(team, s)
-      }
-      function setScore(team, s) {
-        if (!Number.isInteger(Number(s)) || s < 0 || s > 99) return
-
-        score[team - 1] = Number(s)
-        document.getElementById(`score-t${team}-l`).innerHTML = Math.floor(
-          s / 10,
-        )
-        document.getElementById(`score-t${team}-r`).innerHTML = s % 10
-      }
-      function incScore(team) {
-        setScore(team, ++score[team - 1])
-      }
-      function decScore(team) {
-        setScore(team, --score[team - 1])
-      }
-
-      function playWhistle() {
-        alert('Whistle sound (coming soon)')
-      }
-      function showSettings() {
-        alert('There are no settings yet')
-      }
-    </script>
+        <div class="flex gap-2">
+          <button
+            class="button w-24 rounded bg-gray-600 px-5 text-2xl text-white hover:cursor-pointer"
+            onclick="resetConfig()"
+          >
+            Reset
+          </button>
+          <button
+            class="button w-24 rounded bg-gray-400 px-5 text-2xl text-white hover:cursor-pointer"
+            onclick="closeSettings()"
+          >
+            Done
+          </button>
+        </div>
+        <p class="text-sm">More settings coming soon</p>
+        <a
+          href="https://github.com/AdamZed/cyks"
+          target="_blank"
+          onclick="showSettings()"
+          class="flex h-10 w-16 items-center justify-center rounded-xl bg-purple-600 hover:cursor-pointer"
+        >
+          <img class="h-[90%]" src="./imgs/github.svg" />
+        </a>
+      </div>
+    </div>
   </body>
 </html>
