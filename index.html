@@ -55,131 +55,153 @@
   </head>
 
   <body class="bg-gray-800">
-    <table class="h-screen w-screen table-fixed text-center">
-      <tr class="">
-        <td
-          rowspan="5"
-          style="background: hsl(38, 90%, 50%)"
-          col-idx="1:1"
-          class="font-family-hwy-gothic-narrow p-0 text-[40vw]/0.5"
+    <div
+      class="h-screen w-screen text-center portrait:hidden portrait:grid-cols-[85%_15%] portrait:grid-rows-5 landscape:grid landscape:grid-cols-5 landscape:grid-rows-[85%_15%]"
+    >
+      <div
+        style="background: hsl(38, 90%, 50%)"
+        col-idx="1:1"
+        onclick="openScoreSet(1)"
+      >
+        <p
+          class="font-family-hwy-gothic-narrow p-0 text-[40vw]/[1.1]"
+          id="score-t1-l"
+          col-idx="1:0"
         >
-          <p onclick="openScoreSet(1)" id="score-t1-l" col-idx="1:0">0</p>
-        </td>
-        <td
-          rowspan="5"
-          style="background: hsl(38, 90%, 50%)"
-          col-idx="1:1"
-          class="font-family-hwy-gothic-narrow p-0 text-[40vw]/0.5"
+          0
+        </p>
+      </div>
+      <div
+        style="background: hsl(38, 90%, 50%)"
+        col-idx="1:1"
+        onclick="openScoreSet(1)"
+        class="border-r-4 border-black"
+      >
+        <p
+          class="font-family-hwy-gothic-narrow p-0 text-[40vw]/[1.1]"
+          id="score-t1-r"
+          col-idx="1:0"
         >
-          <p onclick="openScoreSet(1)" id="score-t1-r" col-idx="1:0">0</p>
-        </td>
-        <td></td>
-        <td
-          rowspan="5"
-          style="background: hsl(220, 95%, 50%)"
-          col-idx="2:1"
-          class="font-family-hwy-gothic-narrow p-0 text-[40vw]/0.5"
+          0
+        </p>
+      </div>
+      <div class="flex flex-col items-center justify-around">
+        <div
+          onclick="playWhistle()"
+          class="flex w-[90%] items-center justify-center rounded-2xl bg-green-600 shadow-lg shadow-black"
         >
-          <p onclick="openScoreSet(2)" id="score-t2-l" col-idx="2:0">0</p>
-        </td>
-        <td
-          rowspan="5"
-          style="background: hsl(220, 95%, 50%)"
-          col-idx="2:1"
-          class="font-family-hwy-gothic-narrow p-0 text-[40vw]/0.5"
-        >
-          <p onclick="openScoreSet(2)" id="score-t2-r" col-idx="2:0">0</p>
-        </td>
-      </tr>
-      <tr class="">
-        <td rowspan="2" class="flex justify-center">
-          <p
-            onclick="playWhistle()"
-            class="flex w-[90%] items-center justify-center rounded-2xl bg-green-600"
-          >
-            <img class="w-[80%] p-2" src="./imgs/whistle.svg" />
-          </p>
-        </td>
-      </tr>
-      <tr class=""></tr>
-      <tr class=""></tr>
-      <tr class="">
-        <td class="flex justify-center">
+          <img class="w-[80%] p-2" src="./imgs/whistle.svg" />
+        </div>
+        <div class="flex justify-center">
           <p
             onclick="showSettings()"
-            class="flex w-[50%] items-center justify-center rounded-xl bg-violet-400 hover:cursor-pointer"
+            class="flex w-[50%] items-center justify-center rounded-xl bg-violet-400 shadow-md shadow-black hover:cursor-pointer"
           >
             <img class="w-[70%] p-2" src="./imgs/settings.svg" />
           </p>
-        </td>
-      </tr>
-      <tr class="">
-        <td
-          onclick="decScore(1)"
-          style="background: hsl(38, 90%, 50%)"
-          col-idx="1:1"
+        </div>
+      </div>
+      <div
+        style="background: hsl(220, 95%, 50%)"
+        col-idx="2:1"
+        onclick="openScoreSet(2)"
+        class="border-l-4 border-black"
+      >
+        <p
+          class="font-family-hwy-gothic-narrow p-0 text-[40vw]/[1.1]"
+          id="score-t2-l"
+          col-idx="2:0"
         >
-          <p
-            id="score-t1-m"
-            style="background: hsl(38, 90%, 40%)"
-            col-idx="1:2"
-            class="mx-[6vw] rounded-xl p-3 text-[3vw] font-bold hover:cursor-pointer"
-          >
-            -
-          </p>
-        </td>
-        <td
-          onclick="incScore(1)"
-          style="background: hsl(38, 90%, 50%)"
-          col-idx="1:1"
+          0
+        </p>
+      </div>
+      <div
+        style="background: hsl(220, 95%, 50%)"
+        col-idx="2:1"
+        onclick="openScoreSet(2)"
+      >
+        <p
+          class="font-family-hwy-gothic-narrow p-0 text-[40vw]/[1.1]"
+          id="score-t2-r"
+          col-idx="2:0"
         >
-          <p
-            id="score-t1-p"
-            style="background: hsl(38, 90%, 40%)"
-            col-idx="1:2"
-            class="mx-[6vw] rounded-xl p-3 text-[3vw] font-bold hover:cursor-pointer"
-          >
-            +
-          </p>
-        </td>
-        <td class="flex justify-center">
-          <p
-            onclick="reset()"
-            class="flex w-[50%] items-center justify-center rounded-xl bg-red-700 hover:cursor-pointer"
-          >
-            <img class="w-[70%] p-2" src="./imgs/reset.svg" />
-          </p>
-        </td>
-        <td
-          onclick="decScore(2)"
-          style="background: hsl(220, 95%, 50%)"
-          col-idx="2:1"
+          0
+        </p>
+      </div>
+      <div
+        onclick="decScore(1)"
+        style="background: hsl(38, 90%, 50%)"
+        col-idx="1:1"
+        class="flex items-center justify-center"
+      >
+        <p
+          id="score-t1-m"
+          style="background: hsl(38, 90%, 40%)"
+          col-idx="1:2"
+          class="rounded-xl p-2 text-[3vw] font-bold hover:cursor-pointer portrait:w-[90%] landscape:w-[50%]"
         >
-          <p
-            id="score-t2-m"
-            style="background: hsl(220, 95%, 40%)"
-            col-idx="2:2"
-            class="mx-[6vw] rounded-xl p-3 text-[3vw] font-bold hover:cursor-pointer"
-          >
-            -
-          </p>
-        </td>
-        <td
-          onclick="incScore(2)"
-          style="background: hsl(220, 95%, 50%)"
-          col-idx="2:1"
+          -
+        </p>
+      </div>
+      <div
+        onclick="incScore(1)"
+        style="background: hsl(38, 90%, 50%)"
+        col-idx="1:1"
+        class="flex items-center justify-center border-r-4 border-black"
+      >
+        <p
+          id="score-t1-p"
+          style="background: hsl(38, 90%, 40%)"
+          col-idx="1:2"
+          class="rounded-xl p-2 text-[3vw] font-bold hover:cursor-pointer portrait:w-[90%] landscape:w-[50%]"
         >
-          <p
-            id="score-t2-p"
-            style="background: hsl(220, 95%, 40%)"
-            col-idx="2:2"
-            class="mx-[6vw] rounded-xl p-3 text-[3vw] font-bold hover:cursor-pointer"
-          >
-            +
-          </p>
-        </td>
-      </tr>
-    </table>
+          +
+        </p>
+      </div>
+      <div class="flex justify-center">
+        <p
+          onclick="reset()"
+          class="flex items-center justify-center bg-red-700 hover:cursor-pointer"
+        >
+          <img class="h-[80%] p-2" src="./imgs/reset.svg" />
+        </p>
+      </div>
+      <div
+        onclick="decScore(2)"
+        style="background: hsl(220, 95%, 50%)"
+        class="flex items-center justify-center border-l-4 border-black"
+        col-idx="2:1"
+      >
+        <p
+          id="score-t2-m"
+          style="background: hsl(220, 95%, 40%)"
+          col-idx="2:2"
+          class="rounded-xl p-2 text-[3vw] font-bold hover:cursor-pointer portrait:w-[90%] landscape:w-[50%]"
+        >
+          -
+        </p>
+      </div>
+      <div
+        onclick="incScore(2)"
+        style="background: hsl(220, 95%, 50%)"
+        class="flex items-center justify-center"
+        col-idx="2:1"
+      >
+        <p
+          id="score-t2-p"
+          style="background: hsl(220, 95%, 40%)"
+          col-idx="2:2"
+          class="rounded-xl p-2 text-[3vw] font-bold hover:cursor-pointer portrait:w-[90%] landscape:w-[50%]"
+        >
+          +
+        </p>
+      </div>
+    </div>
+    <div class="hidden text-center portrait:block">
+      <h1 class="text-5xl text-white">
+        This app is currently only available in landscape
+      </h1>
+    </div>
     <div
       id="score-set"
       class="absolute top-0 left-0 hidden h-full w-full items-center justify-center bg-black/80"
