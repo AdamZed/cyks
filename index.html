@@ -40,7 +40,7 @@
 
     <link
       rel="preload"
-      href="./fonts/HWYGNRRW.woff2"
+      href="./fonts/OverpassMono-Bold.woff2"
       as="font"
       type="font/woff2"
       crossorigin
@@ -48,160 +48,150 @@
     <link rel="preload" href="./imgs/reset.svg" as="image" />
     <link rel="preload" href="./imgs/settings.svg" as="image" />
     <link rel="preload" href="./imgs/whistle.svg" as="image" />
+    <link rel="preload" href="./imgs/github.svg" as="image" />
+    <link rel="preload" href="./imgs/switch.svg" as="image" />
 
     <noscript>
       <link rel="stylesheet" href="./css/index.css" />
     </noscript>
   </head>
 
-  <body class="bg-gray-800">
+  <body class="touch-manipulation bg-gray-800 select-none">
     <div
-      class="h-screen w-screen text-center portrait:hidden portrait:grid-cols-[85%_15%] portrait:grid-rows-5 landscape:grid landscape:grid-cols-5 landscape:grid-rows-[85%_15%]"
+      class="portrait:hiddden grid h-screen w-screen text-center portrait:grid-flow-col portrait:grid-cols-[85%_15%] portrait:grid-rows-7 landscape:grid-cols-7 landscape:grid-rows-[85%_15%]"
     >
       <div
         style="background: hsl(38, 90%, 50%)"
         col-idx="1:1"
-        onclick="openScoreSet(1)"
+        onclick="incScore(1)"
+        class="flex items-center justify-center border-black portrait:row-span-3 portrait:border-b-4 landscape:col-span-3 landscape:border-r-4"
       >
-        <p
-          class="font-family-hwy-gothic-narrow p-0 text-[40vw]/[1.1]"
-          id="score-t1-l"
+        <div
+          class="font-family-overpass-mono overflow-hidden text-center portrait:text-[34vh] landscape:text-[32vw]"
+          id="score-t1"
           col-idx="1:0"
         >
           0
-        </p>
+        </div>
       </div>
       <div
-        style="background: hsl(38, 90%, 50%)"
-        col-idx="1:1"
-        onclick="openScoreSet(1)"
-        class="border-r-4 border-black"
+        class="grid portrait:grid-cols-5 portrait:grid-rows-1 landscape:grid-cols-1 landscape:grid-rows-6"
       >
-        <p
-          class="font-family-hwy-gothic-narrow p-0 text-[40vw]/[1.1]"
-          id="score-t1-r"
-          col-idx="1:0"
+        <div class="flex justify-center">
+          <div
+            onclick="openSettings()"
+            class="flex min-w-full items-center justify-center bg-slate-300 inset-ring-2 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
+          >
+            <img
+              class="max-h-[98%] max-w-[80%] p-2"
+              src="./imgs/settings.svg"
+            />
+          </div>
+        </div>
+        <div
+          onclick="openTeams()"
+          class="flex items-center justify-center bg-gray-400 text-[3vw] font-bold inset-ring-3 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
         >
-          0
-        </p>
-      </div>
-      <div class="flex flex-col items-center justify-around">
+          <div>TEAMS</div>
+        </div>
+
         <div
           onclick="playWhistle()"
-          class="flex w-[90%] items-center justify-center rounded-2xl bg-green-600 shadow-lg shadow-black"
+          class="flex items-center justify-center bg-slate-600 inset-ring-3 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70 portrait:col-span-1 landscape:row-span-2"
         >
-          <img class="w-[80%] p-2" src="./imgs/whistle.svg" />
+          <img class="max-h-[98%] max-w-[80%] p-2" src="./imgs/whistle.svg" />
+        </div>
+        <div
+          onclick="openGames()"
+          class="flex items-center justify-center bg-gray-400 text-[3vw] font-bold inset-ring-3 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
+        >
+          <div>GAMES</div>
         </div>
         <div class="flex justify-center">
-          <p
-            onclick="showSettings()"
-            class="flex w-[50%] items-center justify-center rounded-xl bg-violet-400 shadow-md shadow-black hover:cursor-pointer"
+          <div
+            onclick="swapTeams()"
+            class="flex min-w-full items-center justify-center bg-slate-300 inset-ring-2 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
           >
-            <img class="w-[70%] p-2" src="./imgs/settings.svg" />
-          </p>
+            <img
+              class="max-h-[70%] max-w-[80%] p-2 portrait:rotate-90"
+              src="./imgs/switch.svg"
+            />
+          </div>
         </div>
       </div>
+
       <div
         style="background: hsl(220, 95%, 50%)"
         col-idx="2:1"
-        onclick="openScoreSet(2)"
-        class="border-l-4 border-black"
+        onclick="incScore(2)"
+        class="flex items-center justify-center overflow-hidden border-black portrait:row-span-3 portrait:border-t-4 landscape:col-span-3 landscape:border-l-4"
       >
-        <p
-          class="font-family-hwy-gothic-narrow p-0 text-[40vw]/[1.1]"
-          id="score-t2-l"
+        <div
+          class="font-family-overpass-mono text-center portrait:text-[34vh] landscape:text-[32vw]"
+          id="score-t2"
           col-idx="2:0"
         >
           0
-        </p>
-      </div>
-      <div
-        style="background: hsl(220, 95%, 50%)"
-        col-idx="2:1"
-        onclick="openScoreSet(2)"
-      >
-        <p
-          class="font-family-hwy-gothic-narrow p-0 text-[40vw]/[1.1]"
-          id="score-t2-r"
-          col-idx="2:0"
-        >
-          0
-        </p>
+        </div>
       </div>
       <div
         onclick="decScore(1)"
         style="background: hsl(38, 90%, 50%)"
-        col-idx="1:1"
-        class="flex items-center justify-center"
+        col-idx="1:2"
+        class="flex items-center justify-center font-bold inset-ring-2 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70 portrait:text-[6vw] landscape:text-[3vw]"
       >
-        <p
-          id="score-t1-m"
-          style="background: hsl(38, 90%, 40%)"
-          col-idx="1:2"
-          class="rounded-xl p-2 text-[3vw] font-bold hover:cursor-pointer portrait:w-[90%] landscape:w-[50%]"
-        >
-          -
-        </p>
+        <div id="score-t1-m">-</div>
+      </div>
+      <div
+        onclick="openScoreSet(1)"
+        style="background: hsl(38, 90%, 50%)"
+        col-idx="1:2"
+        class="flex items-center justify-center font-bold inset-ring-3 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70 portrait:text-[6vw] landscape:text-[3vw]"
+      >
+        <div id="score-t1-s">⊙</div>
       </div>
       <div
         onclick="incScore(1)"
         style="background: hsl(38, 90%, 50%)"
-        col-idx="1:1"
-        class="flex items-center justify-center border-r-4 border-black"
+        col-idx="1:2"
+        class="flex items-center justify-center border-black font-bold inset-ring-3 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70 portrait:border-b-4 portrait:text-[6vw] landscape:border-r-4 landscape:text-[3vw]"
       >
-        <p
-          id="score-t1-p"
-          style="background: hsl(38, 90%, 40%)"
-          col-idx="1:2"
-          class="rounded-xl p-2 text-[3vw] font-bold hover:cursor-pointer portrait:w-[90%] landscape:w-[50%]"
-        >
-          +
-        </p>
+        <div id="score-t1-p">+</div>
       </div>
       <div class="flex justify-center">
-        <p
+        <div
           onclick="reset()"
-          class="flex items-center justify-center bg-red-700 hover:cursor-pointer"
+          class="flex min-w-full items-center justify-center bg-red-700 inset-ring-5 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
         >
           <img class="h-[80%] p-2" src="./imgs/reset.svg" />
-        </p>
+        </div>
       </div>
       <div
         onclick="decScore(2)"
         style="background: hsl(220, 95%, 50%)"
-        class="flex items-center justify-center border-l-4 border-black"
-        col-idx="2:1"
+        col-idx="2:2"
+        class="flex items-center justify-center border-black font-bold inset-ring-3 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70 portrait:border-t-4 portrait:text-[6vw] landscape:border-l-4 landscape:text-[3vw]"
       >
-        <p
-          id="score-t2-m"
-          style="background: hsl(220, 95%, 40%)"
-          col-idx="2:2"
-          class="rounded-xl p-2 text-[3vw] font-bold hover:cursor-pointer portrait:w-[90%] landscape:w-[50%]"
-        >
-          -
-        </p>
+        <div id="score-t2-m">-</div>
+      </div>
+      <div
+        onclick="openScoreSet(2)"
+        style="background: hsl(220, 95%, 50%)"
+        col-idx="2:2"
+        class="flex items-center justify-center font-bold inset-ring-3 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70 portrait:text-[6vw] landscape:text-[3vw]"
+      >
+        <div id="score-t2-s">⊙</div>
       </div>
       <div
         onclick="incScore(2)"
         style="background: hsl(220, 95%, 50%)"
-        class="flex items-center justify-center"
-        col-idx="2:1"
+        col-idx="2:2"
+        class="flex items-center justify-center font-bold inset-ring-3 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70 portrait:text-[6vw] landscape:text-[3vw]"
       >
-        <p
-          id="score-t2-p"
-          style="background: hsl(220, 95%, 40%)"
-          col-idx="2:2"
-          class="rounded-xl p-2 text-[3vw] font-bold hover:cursor-pointer portrait:w-[90%] landscape:w-[50%]"
-        >
-          +
-        </p>
+        <div id="score-t2-p">+</div>
       </div>
     </div>
-    <div class="hidden text-center portrait:block">
-      <h1 class="text-5xl text-white">
-        This app is currently only available in landscape
-      </h1>
-    </div>
+
     <div
       id="score-set"
       class="absolute top-0 left-0 hidden h-full w-full items-center justify-center bg-black/80"
@@ -209,7 +199,15 @@
       <div
         class="flex h-64 w-md flex-col items-center justify-center gap-8 rounded-4xl bg-gray-900 p-10 shadow-2xl shadow-black"
       >
-        <h2 class="block text-3xl text-white">Enter Score</h2>
+        <div
+          class="fixed top-5 left-5 rounded-md bg-gray-700 px-5 text-7xl text-white hover:cursor-pointer"
+          onclick="closeScoreSet()"
+        >
+          X
+        </div>
+        <h2 id="enter-score-text" class="block text-3xl text-white">
+          Enter Score
+        </h2>
         <input
           id="score-set-in"
           class="w-32 bg-white text-center text-3xl"
@@ -221,13 +219,13 @@
         />
         <div class="flex gap-2">
           <button
-            class="button w-24 rounded bg-gray-600 px-5 text-2xl text-white hover:cursor-pointer"
+            class="button w-24 rounded bg-gray-600 px-5 text-2xl text-white transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
             onclick="closeScoreSet()"
           >
             Close
           </button>
           <button
-            class="button w-24 rounded bg-gray-400 px-5 text-2xl hover:cursor-pointer"
+            class="button w-24 rounded bg-gray-400 px-5 text-2xl transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
             onclick="confirmScoreSet()"
           >
             Set
@@ -235,75 +233,98 @@
         </div>
       </div>
     </div>
-
     <div
       id="settings"
       class="absolute top-0 left-0 hidden h-full w-full items-center justify-center bg-black/80"
     >
       <div
-        class="flex h-72 w-md flex-col items-center justify-center gap-4 overflow-scroll rounded-4xl bg-gray-900 p-10 text-white shadow-2xl shadow-black"
+        class="flex h-72 w-md flex-col items-center justify-center gap-4 overflow-scroll rounded-2xl bg-gray-900 text-white shadow-2xl shadow-black"
       >
-        <h2 class="mt-16 block text-3xl text-white">Settings</h2>
-        <div class="flex w-56 justify-baseline gap-5">
-          <input
-            id="col-t1-bg"
-            name="col-t1-bg"
-            type="color"
-            onchange="setTeamCol(this.value, 1, 1)"
-          />
-          <label for="col-t1-bg">Team 1 Colour</label>
+        <div
+          class="fixed top-5 left-5 rounded-md bg-gray-700 px-5 text-7xl hover:cursor-pointer"
+          onclick="closeSettings()"
+        >
+          X
         </div>
-        <div class="flex w-56 justify-baseline gap-5">
-          <input
-            id="col-t1"
-            name="col-t1"
-            type="color"
-            onchange="setTeamCol(this.value, 1, 2)"
-          />
-          <label for="col-t1">Team 1 Text Colour</label>
+
+        <h2 class="text-3xl text-white">Settings</h2>
+        <div class="flex flex-col gap-2">
+          <h3 class="block text-lg text-white">Colours</h3>
+          <div class="flex w-56 justify-baseline gap-5">
+            <input
+              id="col-t1-bg"
+              name="col-t1-bg"
+              type="color"
+              onchange="setTeamCol(this.value, 1, 1)"
+            />
+            <label for="col-t1-bg">Team 1 Colour</label>
+          </div>
+          <div class="flex w-56 justify-baseline gap-5">
+            <input
+              id="col-t1"
+              name="col-t1"
+              type="color"
+              onchange="setTeamCol(this.value, 1, 2)"
+            />
+            <label for="col-t1">Team 1 Text Colour</label>
+          </div>
+          <div class="flex w-56 justify-baseline gap-5">
+            <input
+              id="col-t2-bg"
+              name="col-t2-bg"
+              type="color"
+              onchange="setTeamCol(this.value, 2, 1)"
+            />
+            <label for="col-t2-bg">Team 2 Colour</label>
+          </div>
+          <div class="flex w-56 justify-baseline gap-5">
+            <input
+              id="col-t2"
+              name="col-t2"
+              type="color"
+              onchange="setTeamCol(this.value, 2, 2)"
+            />
+            <label for="col-t2">Team 2 Text Colour</label>
+          </div>
         </div>
-        <div class="flex w-56 justify-baseline gap-5">
-          <input
-            id="col-t2-bg"
-            name="col-t2-bg"
-            type="color"
-            onchange="setTeamCol(this.value, 2, 1)"
-          />
-          <label for="col-t2-bg">Team 2 Colour</label>
-        </div>
-        <div class="flex w-56 justify-baseline gap-5">
-          <input
-            id="col-t2"
-            name="col-t2"
-            type="color"
-            onchange="setTeamCol(this.value, 2, 2)"
-          />
-          <label for="col-t2">Team 2 Text Colour</label>
+        <div class="flex flex-col gap-2">
+          <h3 class="block text-lg text-white">Whistle</h3>
+          <div class="flex w-56 justify-baseline gap-5">
+            <input
+              type="checkbox"
+              id="whistle-onoff"
+              name="whistle-onoff"
+              onchange="setWhistleState(this)"
+            />
+            <label for="whistle-onof">Enabled</label>
+          </div>
         </div>
 
         <div class="flex gap-2">
           <button
-            class="button w-24 rounded bg-gray-600 px-5 text-2xl text-white hover:cursor-pointer"
+            class="button w-24 rounded bg-gray-600 px-5 text-2xl text-white transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
             onclick="resetConfig()"
           >
             Reset
           </button>
           <button
-            class="button w-24 rounded bg-gray-400 px-5 text-2xl text-white hover:cursor-pointer"
+            class="button w-24 rounded bg-gray-400 px-5 text-2xl text-white transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
             onclick="closeSettings()"
           >
             Done
           </button>
         </div>
-        <p class="text-sm">More settings coming soon</p>
-        <a
-          href="https://github.com/AdamZed/cyks"
-          target="_blank"
-          onclick="showSettings()"
-          class="flex h-10 w-16 items-center justify-center rounded-xl bg-purple-600 hover:cursor-pointer"
-        >
-          <img class="h-[90%]" src="./imgs/github.svg" />
-        </a>
+        <div class="text-sm">More settings coming soon</div>
+        <div>
+          <a
+            href="https://github.com/AdamZed/cyks"
+            target="_blank"
+            onclick="showSettings()"
+            class="flex h-10 w-16 items-center justify-center rounded-xl bg-purple-600 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
+          >
+            <img class="h-[90%]" src="./imgs/github.svg" />
+          </a>
+        </div>
       </div>
     </div>
   </body>

@@ -1,4 +1,5 @@
-var score = [0, 0]
+let score = [0, 0]
+let whistleOn = false
 
 function reset() {
   setScore(1, 0)
@@ -9,8 +10,7 @@ function setScore(team, s) {
   s = Number(s)
   if (!Number.isInteger(s) || s < 0 || s > 99) return
   score[team - 1] = s
-  document.getElementById(`score-t${team}-l`).innerHTML = Math.floor(s / 10)
-  document.getElementById(`score-t${team}-r`).innerHTML = s % 10
+  document.getElementById(`score-t${team}`).innerHTML = s
   sessionStorage.setItem(`s-t${team}`, s)
 }
 function incScore(team) {
@@ -21,16 +21,19 @@ function decScore(team) {
 }
 
 function playWhistle() {
-  alert('Whistle sound (coming soon)')
+  if (whistleOn) new Audio('./sounds/whistle.mp3').play()
+  else alert('Whistle is currently disabled. Enable in settings.')
 }
 
 let scoreSetter
+let scoreSetterText
 let scoreSetterInp
 let settings
 let currTeamSet = 0
 
 function openScoreSet(team) {
   currTeamSet = team
+  scoreSetterText.innerHTML = `Enter Score for Team ${team}`
   scoreSetter.classList.remove('hidden')
   scoreSetter.classList.add('flex')
 }
@@ -46,14 +49,38 @@ function closeScoreSet() {
   currTeamSet = 0
   scoreSetterInp.value = ''
 }
-function showSettings() {
+function openSettings() {
   settings.classList.remove('hidden')
   settings.classList.add('flex')
+}
+
+function swapTeams() {
+  let [s1, s2] = score
+  let ct11 = localStorage.getItem('col-t1-i1') ?? 'hsl(38, 90%, 50%)'
+  let ct12 = localStorage.getItem('col-t1-i2') ?? '#000000'
+  let ct21 = localStorage.getItem('col-t2-i1') ?? 'hsl(220, 95%, 40%)'
+  let ct22 = localStorage.getItem('col-t2-i2') ?? '#000000'
+
+  setScore(1, s2)
+  setScore(2, s1)
+  localStorage.setItem('col-t1-i1', ct21)
+  localStorage.setItem('col-t1-i2', ct22)
+  localStorage.setItem('col-t2-i1', ct11)
+  localStorage.setItem('col-t2-i2', ct12)
+  loadConfig()
 }
 
 function closeSettings() {
   settings.classList.remove('flex')
   settings.classList.add('hidden')
+}
+
+function openTeams() {
+  alert('coming soon')
+}
+
+function openGames() {
+  alert('coming soon')
 }
 
 function setTeamCol(col, team, idx) {
@@ -81,6 +108,11 @@ function setTeamCol(col, team, idx) {
   localStorage.setItem(`col-t${team}-i${idx}`, col)
 }
 
+function setWhistleState(checkbox) {
+  whistleOn = checkbox.checked
+  localStorage.setItem('whistle-on', whistleOn)
+}
+
 function resetConfig() {
   localStorage.clear()
   loadConfig()
@@ -99,11 +131,15 @@ function loadConfig() {
   setTeamCol(t2bg.value, 2, 1)
   t2fg.value = localStorage.getItem('col-t2-i2') ?? '#000000'
   setTeamCol(t2fg.value, 2, 2)
+  let whistle = document.getElementById('whistle-onoff')
+  whistleOn = localStorage.getItem('whistle-on') ?? false
+  whistle.checked = whistleOn
 }
 
 window.onload = () => {
   scoreSetter = document.getElementById('score-set')
   scoreSetterInp = document.getElementById('score-set-in')
+  scoreSetterText = document.getElementById('enter-score-text')
   settings = document.getElementById('settings')
 
   setScore(1, sessionStorage.getItem('s-t1'))
