@@ -151,7 +151,10 @@ function resetTeams() {
 function addTeam() {
   teamList.push({
     name: `Team ${teamList.length + 1}`,
-    cols: ['#000000', `hsl(${Math.floor(Math.random() * 250)}, ${Math.floor(Math.random() * 100)}%, 50%)`],
+    cols: [
+      '#000000',
+      `hsl(${Math.floor(Math.random() * 250)}, ${Math.floor(Math.random() * 100)}%, 50%)`,
+    ],
   })
 
   localStorage.setItem('teams', JSON.stringify(teamList))
