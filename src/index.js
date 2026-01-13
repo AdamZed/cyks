@@ -1,5 +1,14 @@
 let score = [0, 0]
+let teams = [0, 1]
+let currTeamScoreSet = 0
+let teamList = []
 let whistleOn = false
+
+let scoreSetter = document.getElementById('score-set')
+let scoreSetterInp = document.getElementById('score-set-in')
+let scoreSetterText = document.getElementById('enter-score-text')
+let settings = document.getElementById('settings')
+let teamSettings = document.getElementById('teams')
 
 function reset() {
   setScore(1, 0)
@@ -25,28 +34,22 @@ function playWhistle() {
   else alert('Whistle is currently disabled. Enable in settings.')
 }
 
-let scoreSetter
-let scoreSetterText
-let scoreSetterInp
-let settings
-let currTeamSet = 0
-
 function openScoreSet(team) {
-  currTeamSet = team
+  currTeamScoreSet = team
   scoreSetterText.innerHTML = `Enter Score for Team ${team}`
   scoreSetter.classList.remove('hidden')
   scoreSetter.classList.add('flex')
 }
 
 function confirmScoreSet() {
-  setScore(currTeamSet, scoreSetterInp.value)
+  setScore(currTeamScoreSet, scoreSetterInp.value)
   closeScoreSet()
 }
 
 function closeScoreSet() {
   scoreSetter.classList.remove('flex')
   scoreSetter.classList.add('hidden')
-  currTeamSet = 0
+  currTeamScoreSet = 0
   scoreSetterInp.value = ''
 }
 function openSettings() {
@@ -56,17 +59,12 @@ function openSettings() {
 
 function swapTeams() {
   let [s1, s2] = score
-  let ct11 = localStorage.getItem('col-t1-i1') ?? 'hsl(38, 90%, 50%)'
-  let ct12 = localStorage.getItem('col-t1-i2') ?? '#000000'
-  let ct21 = localStorage.getItem('col-t2-i1') ?? 'hsl(220, 95%, 40%)'
-  let ct22 = localStorage.getItem('col-t2-i2') ?? '#000000'
+  let [t1, t2] = teams
 
   setScore(1, s2)
   setScore(2, s1)
-  localStorage.setItem('col-t1-i1', ct21)
-  localStorage.setItem('col-t1-i2', ct22)
-  localStorage.setItem('col-t2-i1', ct11)
-  localStorage.setItem('col-t2-i2', ct12)
+  teams = [t2, t1]
+  console.log(teams)
   loadConfig()
 }
 
@@ -76,36 +74,146 @@ function closeSettings() {
 }
 
 function openTeams() {
-  alert('coming soon')
+  teamSettings.classList.remove('hidden')
+  teamSettings.classList.add('flex')
+}
+function refreshTeamList() {
+  document.getElementById('team-list').innerHTML = teamList
+    .map((v, index) => {
+      let t = index
+      return `
+      <div class="flex items-center justify-baseline gap-5">
+        <div class="flex gap-2">
+          <div
+            onclick="playTeam(${t}, 0)"
+            class="rounded bg-gray-300 px-2 py-0.5 text-black hover:cursor-pointer"
+          >
+            <
+          </div>
+          <div
+            onclick="playTeam(${t}, 1)"
+            class="rounded bg-gray-300 px-2 py-0.5 text-black hover:cursor-pointer"
+          >
+            >
+          </div>
+        </div>
+        <label
+          id="name-t${t}"
+          col-idx="t${t}"
+          class="rounded p-1"
+          onblur="updateName(${t})"
+          contenteditable="true"
+          >${v.name}</label
+        >
+        <input
+          id="col-t${t}-bg"
+          name="col-t${t}-bg"
+          type="color"
+          onchange="setTeamCol(${t}, this, 1)"
+        />
+        <input
+          id="col-t${t}-fg"
+          name="col-t${t}-fg"
+          type="color"
+          onchange="setTeamCol(${t}, this, 0)"
+        />
+    </div>
+    `
+    })
+    .join('\n')
+}
+
+function closeTeams() {
+  teamSettings.classList.remove('flex')
+  teamSettings.classList.add('hidden')
+  localStorage.setItem('teams', JSON.stringify(teamList))
+  loadConfig()
+}
+function resetTeams() {
+  teamList = [
+    {
+      name: 'Team 1',
+      cols: ['#000000', 'hsl(38, 90%, 50%)'],
+    },
+    {
+      name: 'Team 2',
+      cols: ['#000000', 'hsl(208, 74%, 50%)'],
+    },
+  ]
+  localStorage.setItem('teams', JSON.stringify(teamList))
+  refreshTeamList()
+
+  loadConfig()
+
+  return teamList
+}
+
+function addTeam() {
+  teamList.push({
+    name: `Team ${teamList.length + 1}`,
+    cols: ['#000000', `hsl(${Math.floor(Math.random() * 250)}, ${Math.floor(Math.random() * 100)}%, 50%)`],
+  })
+
+  localStorage.setItem('teams', JSON.stringify(teamList))
+  refreshTeamList()
+  loadConfig()
+}
+
+function playTeam(team, idx) {
+  if (teams.indexOf(team) > -1) alert('That team is already active')
+  else {
+    teams[idx] = team
+    loadConfig()
+  }
 }
 
 function openGames() {
   alert('coming soon')
 }
 
-function setTeamCol(col, team, idx) {
-  if (idx == 2) {
+function setTeamCol(team, e, idx) {
+  let col = e.value
+  if (idx == 0) {
     document
-      .querySelectorAll(`[col-idx="${team}:0"`)
+      .querySelectorAll(`[col-idx="t${team}"`)
+      .forEach((e) => (e.style.color = col))
+  } else {
+    document
+      .querySelectorAll(`[col-idx="t${team}"`)
+      .forEach((e) => (e.style.background = col))
+  }
+  teamList[team].cols[idx] = col
+
+  let i = teams.indexOf(team)
+  if (i > -1) setActiveTeamCol(i + 1, col, idx)
+}
+
+function setActiveTeamCol(team, col, idx) {
+  if (idx == 0) {
+    document
+      .querySelectorAll(`[col-idx="${team}:1a"`)
       .forEach((e) => (e.style.color = col))
     document
-      .querySelectorAll(`[col-idx="${team}:2"`)
+      .querySelectorAll(`[col-idx="${team}:1b"`)
       .forEach((e) => (e.style.color = col))
   } else {
     let hsl = hexToHSL(col)
     document
-      .querySelectorAll(`[col-idx="${team}:1"`)
+      .querySelectorAll(`[col-idx="${team}:1a"`)
       .forEach(
         (e) => (e.style.background = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`),
       )
     document
-      .querySelectorAll(`[col-idx="${team}:2"`)
+      .querySelectorAll(`[col-idx="${team}:1b"`)
       .forEach(
         (e) =>
           (e.style.background = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l > 20 ? hsl.l - 10 : hsl.l + 10}%)`),
       )
   }
-  localStorage.setItem(`col-t${team}-i${idx}`, col)
+}
+
+function updateName(team) {
+  teamList[team].name = document.getElementById(`name-t${team}`).innerHTML
 }
 
 function setWhistleState(checkbox) {
@@ -114,36 +222,35 @@ function setWhistleState(checkbox) {
 }
 
 function resetConfig() {
-  localStorage.clear()
+  localStorage.setItem('whistle-on', false)
   loadConfig()
 }
 
 function loadConfig() {
-  let t1bg = document.getElementById('col-t1-bg')
-  let t1fg = document.getElementById('col-t1')
-  let t2bg = document.getElementById('col-t2-bg')
-  let t2fg = document.getElementById('col-t2')
-  t1bg.value = localStorage.getItem('col-t1-i1') ?? 'hsl(38, 90%, 50%)'
-  setTeamCol(t1bg.value, 1, 1)
-  t1fg.value = localStorage.getItem('col-t1-i2') ?? '#000000'
-  setTeamCol(t1fg.value, 1, 2)
-  t2bg.value = localStorage.getItem('col-t2-i1') ?? 'hsl(220, 95%, 40%)'
-  setTeamCol(t2bg.value, 2, 1)
-  t2fg.value = localStorage.getItem('col-t2-i2') ?? '#000000'
-  setTeamCol(t2fg.value, 2, 2)
   let whistle = document.getElementById('whistle-onoff')
+  teamList = JSON.parse(localStorage.getItem('teams')) ?? resetTeams()
+
+  for (const [i, tm] of teamList.entries()) {
+    console.log(i, tm)
+    let bg = document.getElementById(`col-t${i}-bg`)
+    let fg = document.getElementById(`col-t${i}-fg`)
+    bg.value = tm.cols[1]
+    fg.value = tm.cols[0]
+    setTeamCol(i, bg, 1)
+    setTeamCol(i, fg, 0)
+  }
+
   whistleOn = localStorage.getItem('whistle-on') ?? false
   whistle.checked = whistleOn
 }
 
 window.onload = () => {
-  scoreSetter = document.getElementById('score-set')
-  scoreSetterInp = document.getElementById('score-set-in')
-  scoreSetterText = document.getElementById('enter-score-text')
-  settings = document.getElementById('settings')
-
   setScore(1, sessionStorage.getItem('s-t1'))
   setScore(2, sessionStorage.getItem('s-t2'))
+  teams = [0, 1]
+  teamList = JSON.parse(localStorage.getItem('teams')) ?? resetTeams()
+  refreshTeamList()
+
   loadConfig()
 }
 

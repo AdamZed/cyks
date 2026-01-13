@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="./css/index.css" />
     <link rel="manifest" href="./manifest.json" />
 
-    <script src="./src/index.js"></script>
+    <script defer src="./src/index.js"></script>
     <script defer>
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./service-worker.js')
@@ -61,15 +61,13 @@
       class="portrait:hiddden grid h-screen w-screen text-center portrait:grid-flow-col portrait:grid-cols-[85%_15%] portrait:grid-rows-7 landscape:grid-cols-7 landscape:grid-rows-[85%_15%]"
     >
       <div
-        style="background: hsl(38, 90%, 50%)"
-        col-idx="1:1"
+        col-idx="1:1a"
         onclick="incScore(1)"
         class="flex items-center justify-center border-black portrait:row-span-3 portrait:border-b-4 landscape:col-span-3 landscape:border-r-4"
       >
         <div
           class="font-family-overpass-mono overflow-hidden text-center portrait:text-[34vh] landscape:text-[32vw]"
           id="score-t1"
-          col-idx="1:0"
         >
           0
         </div>
@@ -121,39 +119,34 @@
       </div>
 
       <div
-        style="background: hsl(220, 95%, 50%)"
-        col-idx="2:1"
+        col-idx="2:1a"
         onclick="incScore(2)"
         class="flex items-center justify-center overflow-hidden border-black portrait:row-span-3 portrait:border-t-4 landscape:col-span-3 landscape:border-l-4"
       >
         <div
           class="font-family-overpass-mono text-center portrait:text-[34vh] landscape:text-[32vw]"
           id="score-t2"
-          col-idx="2:0"
         >
           0
         </div>
       </div>
       <div
         onclick="decScore(1)"
-        style="background: hsl(38, 90%, 50%)"
-        col-idx="1:2"
+        col-idx="1:1b"
         class="flex items-center justify-center font-bold inset-ring-2 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70 portrait:text-[6vw] landscape:text-[3vw]"
       >
         <div id="score-t1-m">-</div>
       </div>
       <div
         onclick="openScoreSet(1)"
-        style="background: hsl(38, 90%, 50%)"
-        col-idx="1:2"
+        col-idx="1:1b"
         class="flex items-center justify-center font-bold inset-ring-3 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70 portrait:text-[6vw] landscape:text-[3vw]"
       >
         <div id="score-t1-s">⊙</div>
       </div>
       <div
         onclick="incScore(1)"
-        style="background: hsl(38, 90%, 50%)"
-        col-idx="1:2"
+        col-idx="1:1b"
         class="flex items-center justify-center border-black font-bold inset-ring-3 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70 portrait:border-b-4 portrait:text-[6vw] landscape:border-r-4 landscape:text-[3vw]"
       >
         <div id="score-t1-p">+</div>
@@ -168,24 +161,21 @@
       </div>
       <div
         onclick="decScore(2)"
-        style="background: hsl(220, 95%, 50%)"
-        col-idx="2:2"
+        col-idx="2:1b"
         class="flex items-center justify-center border-black font-bold inset-ring-3 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70 portrait:border-t-4 portrait:text-[6vw] landscape:border-l-4 landscape:text-[3vw]"
       >
         <div id="score-t2-m">-</div>
       </div>
       <div
         onclick="openScoreSet(2)"
-        style="background: hsl(220, 95%, 50%)"
-        col-idx="2:2"
+        col-idx="2:1b"
         class="flex items-center justify-center font-bold inset-ring-3 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70 portrait:text-[6vw] landscape:text-[3vw]"
       >
         <div id="score-t2-s">⊙</div>
       </div>
       <div
         onclick="incScore(2)"
-        style="background: hsl(220, 95%, 50%)"
-        col-idx="2:2"
+        col-idx="2:1b"
         class="flex items-center justify-center font-bold inset-ring-3 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70 portrait:text-[6vw] landscape:text-[3vw]"
       >
         <div id="score-t2-p">+</div>
@@ -248,45 +238,7 @@
         </div>
 
         <h2 class="text-3xl text-white">Settings</h2>
-        <div class="flex flex-col gap-2">
-          <h3 class="block text-lg text-white">Colours</h3>
-          <div class="flex w-56 justify-baseline gap-5">
-            <input
-              id="col-t1-bg"
-              name="col-t1-bg"
-              type="color"
-              onchange="setTeamCol(this.value, 1, 1)"
-            />
-            <label for="col-t1-bg">Team 1 Colour</label>
-          </div>
-          <div class="flex w-56 justify-baseline gap-5">
-            <input
-              id="col-t1"
-              name="col-t1"
-              type="color"
-              onchange="setTeamCol(this.value, 1, 2)"
-            />
-            <label for="col-t1">Team 1 Text Colour</label>
-          </div>
-          <div class="flex w-56 justify-baseline gap-5">
-            <input
-              id="col-t2-bg"
-              name="col-t2-bg"
-              type="color"
-              onchange="setTeamCol(this.value, 2, 1)"
-            />
-            <label for="col-t2-bg">Team 2 Colour</label>
-          </div>
-          <div class="flex w-56 justify-baseline gap-5">
-            <input
-              id="col-t2"
-              name="col-t2"
-              type="color"
-              onchange="setTeamCol(this.value, 2, 2)"
-            />
-            <label for="col-t2">Team 2 Text Colour</label>
-          </div>
-        </div>
+
         <div class="flex flex-col gap-2">
           <h3 class="block text-lg text-white">Whistle</h3>
           <div class="flex w-56 justify-baseline gap-5">
@@ -320,10 +272,116 @@
             href="https://github.com/AdamZed/cyks"
             target="_blank"
             onclick="showSettings()"
-            class="flex h-10 w-16 items-center justify-center rounded-xl bg-purple-600 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
+            class="flex h-10 w-16 items-center justify-center rounded-xl bg-purple-400 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
           >
             <img class="h-[90%]" src="./imgs/github.svg" />
           </a>
+        </div>
+      </div>
+    </div>
+    <div
+      id="teams"
+      class="absolute top-0 left-0 hidden h-full w-full items-center justify-center bg-black/80"
+    >
+      <div
+        class="flex h-72 w-md flex-col items-center justify-center gap-4 overflow-scroll rounded-2xl bg-gray-900 text-white shadow-2xl shadow-black"
+      >
+        <div
+          class="fixed top-5 left-5 rounded-md bg-gray-700 px-5 text-7xl hover:cursor-pointer"
+          onclick="closeTeams()"
+        >
+          X
+        </div>
+
+        <h2 class="text-3xl text-white">Teams</h2>
+        <div id="team-list" class="flex flex-col gap-2">
+          <div class="flex items-center justify-baseline gap-5">
+            <div class="flex gap-2">
+              <div
+                onclick="playTeam(0, 0)"
+                class="rounded bg-gray-300 px-2 py-0.5 text-black hover:cursor-pointer"
+              >
+                <
+              </div>
+              <div
+                onclick="playTeam(0, 1)"
+                class="rounded bg-gray-300 px-2 py-0.5 text-black hover:cursor-pointer"
+              >
+                >
+              </div>
+            </div>
+            <label
+              id="name-t0"
+              col-idx="t0"
+              class="rounded p-1"
+              onblur="updateName(0)"
+              contenteditable="true"
+              >Team 1</label
+            >
+            <input
+              id="col-t0-bg"
+              name="col-t0-bg"
+              type="color"
+              onchange="setTeamCol(0, this, 1)"
+            />
+            <input
+              id="col-t0-fg"
+              name="col-t0-fg"
+              type="color"
+              onchange="setTeamCol(0, this, 0)"
+            />
+          </div>
+          <div class="flex items-center justify-baseline gap-5">
+            <div class="flex gap-2">
+              <div
+                onclick="playTeam(0, 0)"
+                class="rounded bg-gray-300 px-2 py-0.5 text-black hover:cursor-pointer"
+              >
+                <
+              </div>
+              <div
+                onclick="playTeam(0, 1)"
+                class="rounded bg-gray-300 px-2 py-0.5 text-black hover:cursor-pointer"
+              >
+                >
+              </div>
+            </div>
+            <label
+              id="name-t1"
+              col-idx="t1"
+              class="rounded p-1"
+              onblur="updateName(1)"
+              contenteditable="true"
+              >Team 2</label
+            >
+            <input
+              id="col-t1-bg"
+              name="col-t1-bg"
+              type="color"
+              onchange="setTeamCol(1, this, 1)"
+            />
+            <input
+              id="col-t1-fg"
+              name="col-t1-fg"
+              type="color"
+              onchange="setTeamCol(1, this, 0)"
+            />
+          </div>
+        </div>
+
+        <div class="flex gap-2">
+          <button
+            class="button w-24 rounded bg-gray-600 px-5 text-2xl text-white transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
+            onclick="resetTeams()"
+          >
+            Reset
+          </button>
+          <button
+            class="button w-24 rounded bg-gray-400 px-5 text-2xl text-white transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
+            onclick="addTeam()"
+          >
+            Add
+          </button>
         </div>
       </div>
     </div>
