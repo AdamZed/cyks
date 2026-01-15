@@ -294,7 +294,7 @@
         </div>
 
         <h2 class="text-3xl text-white">Teams</h2>
-        <div id="team-list" class="flex flex-col gap-2">
+        <div id="team-list" class="flex flex-col gap-5">
           <div class="flex items-center justify-baseline gap-5">
             <div class="flex gap-2">
               <div
@@ -382,6 +382,61 @@
           >
             Add
           </button>
+        </div>
+      </div>
+    </div>
+    <div
+      id="games"
+      class="absolute top-0 left-0 hidden h-full w-full items-center justify-center bg-black/80"
+    >
+      <div
+        class="flex h-72 w-md flex-col items-center justify-center gap-4 overflow-scroll rounded-2xl bg-gray-900 text-white shadow-2xl shadow-black"
+      >
+        <div
+          class="fixed top-5 left-5 rounded-md bg-gray-700 px-5 text-7xl hover:cursor-pointer"
+          onclick="closeGames()"
+        >
+          X
+        </div>
+
+        <h2 class="text-3xl text-white">Games</h2>
+        <div class="flex justify-center">
+          <button
+            class="button rounded bg-gray-400 px-5 text-2xl text-white transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
+            onclick="saveCurrentGame()"
+          >
+            Log Current Game
+          </button>
+        </div>
+        <div class="flex flex-col gap-2">
+          <div
+            id="game-list"
+            class="flex flex-col items-center justify-baseline gap-5"
+          >
+            <div class="flex gap-2">
+              <div
+                onclick="removeGame(0)"
+                class="rounded bg-gray-300 px-2 py-0.5 text-black hover:cursor-pointer"
+              >
+                X
+              </div>
+              <p>
+                <span col-idx="t0" class="rounded px-2 py-1">Team 1</span>
+                <span class="p-1 font-bold text-green-400">0</span> -
+                <span class="p-1">0</span>
+                <span col-idx="t1" class="rounded px-2 py-1">Team 2</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="flex justify-center">
+            <button
+              class="button w-24 rounded bg-gray-600 px-5 text-2xl text-white transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
+              onclick="resetGames()"
+            >
+              Clear
+            </button>
+          </div>
         </div>
       </div>
     </div>

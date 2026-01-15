@@ -2,6 +2,7 @@ let score = [0, 0]
 let teams = [0, 1]
 let currTeamScoreSet = 0
 let teamList = []
+let gameList = []
 let whistleOn = false
 
 let scoreSetter = document.getElementById('score-set')
@@ -9,6 +10,7 @@ let scoreSetterInp = document.getElementById('score-set-in')
 let scoreSetterText = document.getElementById('enter-score-text')
 let settings = document.getElementById('settings')
 let teamSettings = document.getElementById('teams')
+let gameSettings = document.getElementById('games')
 
 function reset() {
   setScore(1, 0)
@@ -64,7 +66,6 @@ function swapTeams() {
   setScore(1, s2)
   setScore(2, s1)
   teams = [t2, t1]
-  console.log(teams)
   loadConfig()
 }
 
@@ -79,48 +80,78 @@ function openTeams() {
 }
 function refreshTeamList() {
   document.getElementById('team-list').innerHTML = teamList
-    .map((v, index) => {
-      let t = index
+    .map((tm, index) => {
       return `
       <div class="flex items-center justify-baseline gap-5">
         <div class="flex gap-2">
           <div
-            onclick="playTeam(${t}, 0)"
+            onclick="playTeam(${index}, 0)"
             class="rounded bg-gray-300 px-2 py-0.5 text-black hover:cursor-pointer"
           >
             <
           </div>
           <div
-            onclick="playTeam(${t}, 1)"
+            onclick="playTeam(${index}, 1)"
             class="rounded bg-gray-300 px-2 py-0.5 text-black hover:cursor-pointer"
           >
             >
           </div>
         </div>
         <label
-          id="name-t${t}"
-          col-idx="t${t}"
+          id="name-t${index}"
+          col-idx="t${index}"
           class="rounded p-1"
-          onblur="updateName(${t})"
+          onblur="updateName(${index})"
           contenteditable="true"
-          >${v.name}</label
+          >${tm.name}</label
         >
         <input
-          id="col-t${t}-bg"
-          name="col-t${t}-bg"
+          id="col-t${index}-bg"
+          name="col-t${index}-bg"
           type="color"
-          onchange="setTeamCol(${t}, this, 1)"
+          onchange="setTeamCol(${index}, this, 1)"
         />
         <input
-          id="col-t${t}-fg"
-          name="col-t${t}-fg"
+          id="col-t${index}-fg"
+          name="col-t${index}-fg"
           type="color"
-          onchange="setTeamCol(${t}, this, 0)"
+          onchange="setTeamCol(${index}, this, 0)"
         />
     </div>
     `
     })
     .join('\n')
+}
+
+function refreshGameList() {
+  document.getElementById('game-list').innerHTML =
+    gameList.length == 0
+      ? 'No games saved'
+      : gameList
+          .map((gm, index) => {
+            let c1 = '',
+              c2 = ''
+            if (gm.s1 > gm.s2) c1 = 'font-bold text-green-400'
+            else if (gm.s2 > gm.s1) c2 = 'font-bold text-green-400'
+            return `
+      <div class="flex gap-2">
+        <p>
+          <span col-idx="t${gm.t1}" class="rounded px-2 py-1">${teamList[gm.t1].name}</span>
+          <span class="p-1 ${c1}">${gm.s1}</span> -
+          <span class="p-1 ${c2}">${gm.s2}</span>
+          <span col-idx="t${gm.t2}" class="rounded px-2 py-1">${teamList[gm.t2].name}</span>
+        </p>
+        <div
+          onclick="removeGame(${index})"
+          class="rounded bg-gray-300 px-2 py-0.5 text-black hover:cursor-pointer"
+        >
+          X
+        </div>
+      </div>
+    `
+          })
+          .reverse()
+          .join('\n')
 }
 
 function closeTeams() {
@@ -148,6 +179,36 @@ function resetTeams() {
   return teamList
 }
 
+function saveCurrentGame() {
+  gameList.push({
+    t1: teams[0],
+    t2: teams[1],
+    s1: score[0],
+    s2: score[1],
+  })
+  localStorage.setItem('games', JSON.stringify(gameList))
+  refreshGameList()
+  loadConfig()
+  reset()
+}
+
+function removeGame(idx) {
+  gameList.splice(idx, 1)
+  localStorage.setItem('games', JSON.stringify(gameList))
+  refreshGameList()
+  loadConfig()
+}
+
+function resetGames() {
+  gameList = [
+    //{t1: id, t2: id, s1:X, s2:X}
+  ]
+  localStorage.setItem('games', JSON.stringify(gameList))
+  refreshGameList()
+  loadConfig()
+  return gameList
+}
+
 function addTeam() {
   teamList.push({
     name: `Team ${teamList.length + 1}`,
@@ -171,7 +232,12 @@ function playTeam(team, idx) {
 }
 
 function openGames() {
-  alert('coming soon')
+  gameSettings.classList.remove('hidden')
+  gameSettings.classList.add('flex')
+}
+function closeGames() {
+  gameSettings.classList.remove('flex')
+  gameSettings.classList.add('hidden')
 }
 
 function setTeamCol(team, e, idx) {
@@ -229,12 +295,23 @@ function resetConfig() {
   loadConfig()
 }
 
+function getTeamList() {
+  let t = localStorage.getItem('teams')
+  if (t == null) return resetTeams()
+  return JSON.parse(t)
+}
+
+function getGameList() {
+  let g = localStorage.getItem('games')
+  if (g == null) return resetGames()()
+  return JSON.parse(g)
+}
+
 function loadConfig() {
   let whistle = document.getElementById('whistle-onoff')
-  teamList = JSON.parse(localStorage.getItem('teams')) ?? resetTeams()
+  teamList = getTeamList()
 
   for (const [i, tm] of teamList.entries()) {
-    console.log(i, tm)
     let bg = document.getElementById(`col-t${i}-bg`)
     let fg = document.getElementById(`col-t${i}-fg`)
     bg.value = tm.cols[1]
@@ -251,8 +328,10 @@ window.onload = () => {
   setScore(1, sessionStorage.getItem('s-t1'))
   setScore(2, sessionStorage.getItem('s-t2'))
   teams = [0, 1]
-  teamList = JSON.parse(localStorage.getItem('teams')) ?? resetTeams()
+  teamList = getTeamList()
   refreshTeamList()
+  gameList = getGameList()
+  refreshGameList()
 
   loadConfig()
 }
