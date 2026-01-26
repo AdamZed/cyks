@@ -6,35 +6,21 @@ A webapp for keeping score of 1v1 (solo/team) games
 
 ## Developing
 
-Install dependencies with bun or npm
+This project is vanilla HTML/JS/CSS.
+Package manager is just used to run formatting
 
 ```bash
 bun install
 ```
 
-Watch for changes in Tailwind
-
-```bash
-bun run tw:watch
-```
-
-## Contributing
-
-Check formatting and linting
-
-```bash
-bun check
-```
-
-...and write
+Format files
 
 ```bash
 bun run format
-bun run lint:fix
 ```
 
-Then build
+Or check format without writing
 
 ```bash
-bun run build
+bun run check
 ```

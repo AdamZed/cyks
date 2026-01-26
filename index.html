@@ -24,419 +24,341 @@
       content="A simple team vs team scoreboard webapp."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="./imgs/preview.png" />
+    <meta property="og:image" content="./assets/imgs/preview.png" />
     <meta property="og:url" content="https://vault.adamzanon.com/cyks" />
 
-    <link rel="icon" href="./imgs/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="./css/index.css" />
+    <link rel="icon" href="./assets/icons/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./styles/reset.css" />
+    <link rel="stylesheet" href="./styles/index.css" />
     <link rel="manifest" href="./manifest.json" />
 
-    <script defer src="./src/index.js"></script>
+    <script src="./scripts/util.js"></script>
+    <script src="./scripts/scoreboard.js"></script>
+    <script src="./scripts/settings.js"></script>
+    <script defer src="./scripts/index.js"></script>
     <script defer>
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./service-worker.js')
       }
     </script>
 
-    <link
-      rel="preload"
-      href="./fonts/OverpassMono-Bold.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="preload" href="./imgs/reset.svg" as="image" />
-    <link rel="preload" href="./imgs/settings.svg" as="image" />
-    <link rel="preload" href="./imgs/whistle.svg" as="image" />
-    <link rel="preload" href="./imgs/github.svg" as="image" />
-    <link rel="preload" href="./imgs/switch.svg" as="image" />
-
-    <noscript>
-      <link rel="stylesheet" href="./css/index.css" />
-    </noscript>
+    <link rel="preload" href="./assets/imgs/reset.svg" as="image" />
+    <link rel="preload" href="./assets/imgs/settings.svg" as="image" />
+    <link rel="preload" href="./assets/imgs/whistle.svg" as="image" />
+    <link rel="preload" href="./assets/imgs/github.svg" as="image" />
+    <link rel="preload" href="./assets/imgs/switch.svg" as="image" />
   </head>
 
-  <body class="touch-manipulation bg-gray-800 select-none">
-    <div
-      class="portrait:hiddden grid h-screen w-screen text-center portrait:grid-flow-col portrait:grid-cols-[85%_15%] portrait:grid-rows-7 landscape:grid-cols-7 landscape:grid-rows-[85%_15%]"
-    >
+  <body>
+    <noscript>
+      <h1>This app requires JavaScript to be enabled</h1>
+      <style>
+        #scoreboard {
+          display: none !important;
+        }
+      </style>
+    </noscript>
+    <div id="scoreboard">
       <div
         col-idx="1:1a"
         onclick="incScore(1)"
-        class="flex items-center justify-center border-black portrait:row-span-3 portrait:border-b-4 landscape:col-span-3 landscape:border-r-4"
+        class="flex-center score border-rb"
       >
-        <div
-          class="font-family-overpass-mono overflow-hidden text-center portrait:text-[34vh] landscape:text-[32vw]"
-          id="score-t1"
-        >
-          0
-        </div>
+        <div font-idx="1" id="score-t1">0</div>
+        <div font-idx="2" id="sets-t1"></div>
       </div>
-      <div
-        class="grid portrait:grid-cols-5 portrait:grid-rows-1 landscape:grid-cols-1 landscape:grid-rows-6"
-      >
-        <div class="flex justify-center">
-          <div
-            onclick="openSettings()"
-            class="flex min-w-full items-center justify-center bg-slate-300 inset-ring-2 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
-          >
-            <img
-              class="max-h-[98%] max-w-[80%] p-2"
-              src="./imgs/settings.svg"
-            />
-          </div>
-        </div>
-        <div
+      <div id="option-stack">
+        <button
+          onclick="openSettings()"
+          class="flex-center button fill-width bg-lighter"
+        >
+          <img src="./assets/imgs/settings.svg" />
+        </button>
+        <button
           onclick="openTeams()"
-          class="flex items-center justify-center bg-gray-400 text-[3vw] font-bold inset-ring-3 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
+          class="flex-center button fill-width bg-light"
         >
-          <div>TEAMS</div>
-        </div>
-
-        <div
+          TEAMS
+        </button>
+        <button
+          id="whistle"
           onclick="playWhistle()"
-          class="flex items-center justify-center bg-slate-600 inset-ring-3 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70 portrait:col-span-1 landscape:row-span-2"
+          class="flex-center button fill-width bg-dark"
         >
-          <img class="max-h-[98%] max-w-[80%] p-2" src="./imgs/whistle.svg" />
-        </div>
-        <div
+          <img src="./assets/imgs/whistle.svg" />
+        </button>
+        <button
           onclick="openGames()"
-          class="flex items-center justify-center bg-gray-400 text-[3vw] font-bold inset-ring-3 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
+          class="flex-center button fill-width bg-light"
         >
-          <div>GAMES</div>
-        </div>
-        <div class="flex justify-center">
-          <div
-            onclick="swapTeams()"
-            class="flex min-w-full items-center justify-center bg-slate-300 inset-ring-2 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
-          >
-            <img
-              class="max-h-[70%] max-w-[80%] p-2 portrait:rotate-90"
-              src="./imgs/switch.svg"
-            />
-          </div>
-        </div>
+          GAMES
+        </button>
+        <button
+          onclick="swapTeams()"
+          class="flex-center button fill-width bg-lighter"
+        >
+          <img class="rotate-with" src="./assets/imgs/switch.svg" />
+        </button>
       </div>
-
       <div
         col-idx="2:1a"
         onclick="incScore(2)"
-        class="flex items-center justify-center overflow-hidden border-black portrait:row-span-3 portrait:border-t-4 landscape:col-span-3 landscape:border-l-4"
+        class="flex-center score border-lt"
       >
-        <div
-          class="font-family-overpass-mono text-center portrait:text-[34vh] landscape:text-[32vw]"
-          id="score-t2"
-        >
-          0
-        </div>
+        <div font-idx="1" id="score-t2">0</div>
+        <div font-idx="2" id="sets-t2"></div>
       </div>
-      <div
+      <button
         onclick="decScore(1)"
         col-idx="1:1b"
-        class="flex items-center justify-center font-bold inset-ring-2 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70 portrait:text-[6vw] landscape:text-[3vw]"
+        id="score-t1-m"
+        class="flex-center button fill-width button-score"
       >
-        <div id="score-t1-m">-</div>
-      </div>
-      <div
+        -
+      </button>
+      <button
         onclick="openScoreSet(1)"
         col-idx="1:1b"
-        class="flex items-center justify-center font-bold inset-ring-3 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70 portrait:text-[6vw] landscape:text-[3vw]"
+        id="score-t1-s"
+        class="flex-center button fill-width button-score"
       >
-        <div id="score-t1-s">⊙</div>
-      </div>
-      <div
+        ⊙
+      </button>
+      <button
         onclick="incScore(1)"
         col-idx="1:1b"
-        class="flex items-center justify-center border-black font-bold inset-ring-3 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70 portrait:border-b-4 portrait:text-[6vw] landscape:border-r-4 landscape:text-[3vw]"
+        id="score-t1-p"
+        class="border-rb flex-center button fill-width button-score"
       >
-        <div id="score-t1-p">+</div>
-      </div>
-      <div class="flex justify-center">
-        <div
-          onclick="reset()"
-          class="flex min-w-full items-center justify-center bg-red-700 inset-ring-5 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
-        >
-          <img class="h-[80%] p-2" src="./imgs/reset.svg" />
-        </div>
-      </div>
-      <div
+        +
+      </button>
+      <button class="button flex-center bg-red" onclick="resetScores()">
+        <img src="./assets/imgs/reset.svg" />
+      </button>
+      <button
         onclick="decScore(2)"
         col-idx="2:1b"
-        class="flex items-center justify-center border-black font-bold inset-ring-3 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70 portrait:border-t-4 portrait:text-[6vw] landscape:border-l-4 landscape:text-[3vw]"
+        id="score-t2-m"
+        class="border-lt flex-center button fill-width button-score"
       >
-        <div id="score-t2-m">-</div>
-      </div>
-      <div
+        -
+      </button>
+      <button
         onclick="openScoreSet(2)"
         col-idx="2:1b"
-        class="flex items-center justify-center font-bold inset-ring-3 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70 portrait:text-[6vw] landscape:text-[3vw]"
+        id="score-t2-s"
+        class="flex-center button fill-width button-score"
       >
-        <div id="score-t2-s">⊙</div>
-      </div>
-      <div
+        ⊙
+      </button>
+      <button
         onclick="incScore(2)"
         col-idx="2:1b"
-        class="flex items-center justify-center font-bold inset-ring-3 inset-ring-black/25 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70 portrait:text-[6vw] landscape:text-[3vw]"
+        id="score-t2-p"
+        class="flex-center button fill-width button-score"
       >
-        <div id="score-t2-p">+</div>
-      </div>
+        +
+      </button>
     </div>
 
-    <div
-      id="score-set"
-      class="absolute top-0 left-0 hidden h-full w-full items-center justify-center bg-black/80"
-    >
-      <div
-        class="flex h-64 w-md flex-col items-center justify-center gap-8 rounded-4xl bg-gray-900 p-10 shadow-2xl shadow-black"
+    <!-- POPOVER WINDOWS -->
+    <dialog id="score-set" class="bg-darker">
+      <button
+        class="close-button button bg-dark flex-center"
+        onclick="closeScoreSet()"
       >
-        <div
-          class="fixed top-5 left-5 rounded-md bg-gray-700 px-5 text-7xl text-white hover:cursor-pointer"
-          onclick="closeScoreSet()"
-        >
-          X
-        </div>
-        <h2 id="enter-score-text" class="block text-3xl text-white">
-          Enter Score
-        </h2>
+        ×
+      </button>
+      <div class="flex-center">
+        <h2 id="enter-score-text">Enter Score</h2>
+
         <input
           id="score-set-in"
-          class="w-32 bg-white text-center text-3xl"
+          class="number-input"
           type="number"
           min="0"
           max="99"
           inputmode="numeric"
-          pattern="[0-9]*"
+          pattern="[0-9]{1,2}"
         />
-        <div class="flex gap-2">
+
+        <div class="button-group">
           <button
-            class="button w-24 rounded bg-gray-600 px-5 text-2xl text-white transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
-            onclick="closeScoreSet()"
-          >
-            Close
-          </button>
-          <button
-            class="button w-24 rounded bg-gray-400 px-5 text-2xl transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
+            class="button button-settings bg-light"
             onclick="confirmScoreSet()"
           >
             Set
           </button>
         </div>
       </div>
-    </div>
-    <div
-      id="settings"
-      class="absolute top-0 left-0 hidden h-full w-full items-center justify-center bg-black/80"
-    >
-      <div
-        class="flex h-72 w-md flex-col items-center justify-center gap-4 overflow-scroll rounded-2xl bg-gray-900 text-white shadow-2xl shadow-black"
+    </dialog>
+
+    <dialog id="settings" class="bg-darker">
+      <button
+        class="close-button button bg-dark flex-center"
+        onclick="closeSettings()"
       >
-        <div
-          class="fixed top-5 left-5 rounded-md bg-gray-700 px-5 text-7xl hover:cursor-pointer"
-          onclick="closeSettings()"
-        >
-          X
-        </div>
+        ×
+      </button>
+      <div class="flex-center">
+        <h2>Settings</h2>
 
-        <h2 class="text-3xl text-white">Settings</h2>
-
-        <div class="flex flex-col gap-2">
-          <h3 class="block text-lg text-white">Whistle</h3>
-          <div class="flex w-56 justify-baseline gap-5">
-            <input
-              type="checkbox"
-              id="whistle-onoff"
-              name="whistle-onoff"
-              onchange="setWhistleState(this)"
-            />
-            <label for="whistle-onof">Enabled</label>
+        <div class="setting-list">
+          <h3>Whistle</h3>
+          <div class="bg-dark setting-block">
+            <div class="setting-option">
+              <label for="whistle-onoff">Enabled</label>
+              <input
+                type="checkbox"
+                id="whistle-onoff"
+                name="whistle-onoff"
+                onchange="updateWhistleState(this.checked)"
+              />
+            </div>
+          </div>
+          <h3>Sets Won</h3>
+          <div class="bg-dark setting-block">
+            <div class="setting-option">
+              <label for="setswon-count">Count</label>
+              <select
+                id="setswon-count"
+                name="setswon-count"
+                onchange="updateSetswonCount(this.value)"
+              >
+                <option>Disabled</option>
+                <option>Head to Head</option>
+                <option>All Wins</option>
+              </select>
+            </div>
+          </div>
+          <h3>Score Font</h3>
+          <div class="bg-dark setting-block">
+            <div class="setting-option">
+              <label for="font-choice">Font</label>
+              <select
+                id="font-choice"
+                name="font-choice"
+                onchange="updateFont(this.value)"
+              >
+                <option>Highway Gothic</option>
+                <option>Overpass Mono</option>
+                <option>Monomakh</option>
+                <option>Monomaniac</option>
+              </select>
+            </div>
           </div>
         </div>
-
-        <div class="flex gap-2">
+        <div class="button-group">
           <button
-            class="button w-24 rounded bg-gray-600 px-5 text-2xl text-white transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
+            class="button button-settings bg-dark"
             onclick="resetConfig()"
           >
             Reset
           </button>
-          <button
-            class="button w-24 rounded bg-gray-400 px-5 text-2xl text-white transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
-            onclick="closeSettings()"
-          >
-            Done
-          </button>
         </div>
         <div class="text-sm">More settings coming soon</div>
-        <div>
-          <a
-            href="https://github.com/AdamZed/cyks"
-            target="_blank"
-            onclick="showSettings()"
-            class="flex h-10 w-16 items-center justify-center rounded-xl bg-purple-400 transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
-          >
-            <img class="h-[90%]" src="./imgs/github.svg" />
-          </a>
-        </div>
-      </div>
-    </div>
-    <div
-      id="teams"
-      class="absolute top-0 left-0 hidden h-full w-full items-center justify-center bg-black/80"
-    >
-      <div
-        class="flex h-72 w-md flex-col items-center justify-center gap-4 overflow-scroll rounded-2xl bg-gray-900 text-white shadow-2xl shadow-black"
-      >
-        <div
-          class="fixed top-5 left-5 rounded-md bg-gray-700 px-5 text-7xl hover:cursor-pointer"
-          onclick="closeTeams()"
+        <a
+          class="button flex-center small-img bg-purple"
+          href="https://github.com/AdamZed/cyks"
+          target="_blank"
         >
-          X
-        </div>
+          <img src="./assets/imgs/github.svg" />
+        </a>
+      </div>
+    </dialog>
 
-        <h2 class="text-3xl text-white">Teams</h2>
-        <div id="team-list" class="flex flex-col gap-5">
-          <div class="flex items-center justify-baseline gap-5">
-            <div class="flex gap-2">
-              <div
-                onclick="playTeam(0, 0)"
-                class="rounded bg-gray-300 px-2 py-0.5 text-black hover:cursor-pointer"
-              >
-                <
-              </div>
-              <div
-                onclick="playTeam(0, 1)"
-                class="rounded bg-gray-300 px-2 py-0.5 text-black hover:cursor-pointer"
-              >
-                >
-              </div>
-            </div>
-            <label
-              id="name-t0"
-              col-idx="t0"
-              class="rounded p-1"
-              onblur="updateName(0)"
-              contenteditable="true"
-              >Team 1</label
-            >
-            <input
-              id="col-t0-bg"
-              name="col-t0-bg"
-              type="color"
-              onchange="setTeamCol(0, this, 1)"
-            />
-            <input
-              id="col-t0-fg"
-              name="col-t0-fg"
-              type="color"
-              onchange="setTeamCol(0, this, 0)"
-            />
-          </div>
-          <div class="flex items-center justify-baseline gap-5">
-            <div class="flex gap-2">
-              <div
-                onclick="playTeam(0, 0)"
-                class="rounded bg-gray-300 px-2 py-0.5 text-black hover:cursor-pointer"
-              >
-                <
-              </div>
-              <div
-                onclick="playTeam(0, 1)"
-                class="rounded bg-gray-300 px-2 py-0.5 text-black hover:cursor-pointer"
-              >
-                >
-              </div>
-            </div>
-            <label
-              id="name-t1"
-              col-idx="t1"
-              class="rounded p-1"
-              onblur="updateName(1)"
-              contenteditable="true"
-              >Team 2</label
-            >
-            <input
-              id="col-t1-bg"
-              name="col-t1-bg"
-              type="color"
-              onchange="setTeamCol(1, this, 1)"
-            />
-            <input
-              id="col-t1-fg"
-              name="col-t1-fg"
-              type="color"
-              onchange="setTeamCol(1, this, 0)"
-            />
-          </div>
-        </div>
+    <dialog id="teams" class="bg-darker">
+      <button
+        class="close-button button bg-dark flex-center"
+        onclick="closeTeams()"
+      >
+        ×
+      </button>
+      <div class="flex-center">
+        <h2>Teams</h2>
 
-        <div class="flex gap-2">
-          <button
-            class="button w-24 rounded bg-gray-600 px-5 text-2xl text-white transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
-            onclick="resetTeams()"
-          >
+        <div id="team-list" class="setting-list">Populated by template</div>
+        <div class="button-group">
+          <button class="button button-settings bg-dark" onclick="resetTeams()">
             Reset
           </button>
-          <button
-            class="button w-24 rounded bg-gray-400 px-5 text-2xl text-white transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
-            onclick="addTeam()"
-          >
+          <button class="button button-settings bg-light" onclick="addTeam()">
             Add
           </button>
         </div>
+        <div class="text-sm">Resetting teams will also clear saved scores</div>
       </div>
-    </div>
-    <div
-      id="games"
-      class="absolute top-0 left-0 hidden h-full w-full items-center justify-center bg-black/80"
-    >
-      <div
-        class="flex h-72 w-md flex-col items-center justify-center gap-4 overflow-scroll rounded-2xl bg-gray-900 text-white shadow-2xl shadow-black"
-      >
-        <div
-          class="fixed top-5 left-5 rounded-md bg-gray-700 px-5 text-7xl hover:cursor-pointer"
-          onclick="closeGames()"
-        >
-          X
-        </div>
+    </dialog>
 
-        <h2 class="text-3xl text-white">Games</h2>
-        <div class="flex justify-center">
+    <dialog id="games" class="bg-darker">
+      <button
+        class="close-button button bg-dark flex-center"
+        onclick="closeGames()"
+      >
+        ×
+      </button>
+      <div class="flex-center">
+        <h2>Games</h2>
+
+        <div class="button-group">
           <button
-            class="button rounded bg-gray-400 px-5 text-2xl text-white transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
-            onclick="saveCurrentGame()"
+            class="button button-settings bg-light"
+            onclick="logCurrentGame()"
           >
             Log Current Game
           </button>
         </div>
-        <div class="flex flex-col gap-2">
-          <div
-            id="game-list"
-            class="flex flex-col items-center justify-baseline gap-5"
-          >
-            <div class="flex gap-2">
-              <div
-                onclick="removeGame(0)"
-                class="rounded bg-gray-300 px-2 py-0.5 text-black hover:cursor-pointer"
-              >
-                X
-              </div>
-              <p>
-                <span col-idx="t0" class="rounded px-2 py-1">Team 1</span>
-                <span class="p-1 font-bold text-green-400">0</span> -
-                <span class="p-1">0</span>
-                <span col-idx="t1" class="rounded px-2 py-1">Team 2</span>
-              </p>
-            </div>
-          </div>
+        <div id="game-list" class="setting-block">Populated by template</div>
+        <div class="button-group">
+          <button class="button button-settings bg-dark" onclick="resetGames()">
+            Clear
+          </button>
+        </div>
+      </div>
+    </dialog>
 
-          <div class="flex justify-center">
-            <button
-              class="button w-24 rounded bg-gray-600 px-5 text-2xl text-white transition-all hover:cursor-pointer hover:brightness-70 active:brightness-70"
-              onclick="resetGames()"
-            >
-              Clear
-            </button>
+    <!-- TEMPLATES -->
+
+    <div id="templates" style="display: none">
+      <div id="team-template">
+        <h3
+          id="name-t$IDX$"
+          col-idx="t$IDX$"
+          onblur="updateName($IDX$)"
+          contenteditable="true"
+        >
+          $NAME$
+        </h3>
+        <div class="setting-block">
+          <div class="team-option">
+            <button onclick="playTeam($IDX$, 0)">&lt;</button>
+            <button onclick="playTeam($IDX$, 1)">&gt;</button>
+            <input
+              id="col-t$IDX$-bg"
+              type="color"
+              onchange="setTeamCol($IDX$, this, 1)"
+              onblur="saveTeamList()"
+            />
+            <input
+              id="col-t$IDX$-fg"
+              type="color"
+              onchange="setTeamCol($IDX$, this, 0)"
+              onblur="saveTeamList()"
+            />
           </div>
+        </div>
+      </div>
+      <div id="game-template">
+        <div class="game-played">
+          <div col-idx="t$T1$" class="rounded score-team">$NAME1$</div>
+          <div>
+            <span class="p-1 $STY1$">$S1$</span> -
+            <span class="p-1 $STY2$">$S2$</span>
+          </div>
+          <div col-idx="t$T2$" class="rounded score-team">$NAME2$</div>
+          <button class="button button-delete" onclick="removeGame($IDX$)">
+            ×
+          </button>
         </div>
       </div>
     </div>
