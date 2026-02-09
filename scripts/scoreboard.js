@@ -46,6 +46,16 @@ function playTeam(team, idx) {
   redrawSets()
 }
 
+function endGame(save) {
+  if (!save) {
+    resetScores()
+  } else {
+    logCurrentGame()
+  }
+  closeGameEnd()
+  return
+}
+
 function logCurrentGame() {
   let game = {
     t1: teams[0],

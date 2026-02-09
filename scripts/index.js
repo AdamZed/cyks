@@ -2,6 +2,8 @@ let settings = document.getElementById('settings')
 let teamSettings = document.getElementById('teams')
 let gameSettings = document.getElementById('games')
 let scoreSetter = document.getElementById('score-set')
+let gameEnder = document.getElementById('game-end')
+let gameEnderScore = document.getElementById('game-end-score')
 let scoreSetterInp = document.getElementById('score-set-in')
 let scoreSetterText = document.getElementById('enter-score-text')
 let setswonCount = document.getElementById('setswon-count')
@@ -32,6 +34,19 @@ function openGames() {
 }
 function closeGames() {
   gameSettings.close()
+}
+function openGameEnd() {
+  gameEnderScore.innerHTML = gameTemplate({
+    t1: teams[0],
+    t2: teams[1],
+    s1: score[0],
+    s2: score[1],
+  })
+  redrawTeams()
+  gameEnder.showModal()
+}
+function closeGameEnd() {
+  gameEnder.close()
 }
 
 function openScoreSet(team) {
@@ -65,22 +80,24 @@ function refreshGameList() {
     gameList.length == 0
       ? 'No games saved'
       : gameList
-          .map((gm, index) => {
-            let [c1, c2] = ['', '']
-            if (gm.s1 > gm.s2) c1 = 'font-bold text-green'
-            else if (gm.s2 > gm.s1) c2 = 'font-bold text-green'
-            return document
-              .getElementById('game-template')
-              .innerHTML.replace('$T1$', gm.t1)
-              .replace('$T2$', gm.t2)
-              .replace('$S1$', gm.s1)
-              .replace('$S2$', gm.s2)
-              .replace('$STY1$', c1)
-              .replace('$STY2$', c2)
-              .replace('$NAME1$', teamList[gm.t1].name)
-              .replace('$NAME2$', teamList[gm.t2].name)
-              .replace('$IDX$', index)
-          })
+          .map((gm, index) => gameTemplate(gm, index))
           .reverse()
           .join('\n')
+}
+
+function gameTemplate(gm, idx = -1) {
+  let [c1, c2] = ['', '']
+  if (gm.s1 > gm.s2) c1 = 'font-bold text-green'
+  else if (gm.s2 > gm.s1) c2 = 'font-bold text-green'
+  return document
+    .getElementById(idx == -1 ? 'game-template-single' : 'game-template')
+    .innerHTML.replace('$T1$', gm.t1)
+    .replace('$T2$', gm.t2)
+    .replace('$S1$', gm.s1)
+    .replace('$S2$', gm.s2)
+    .replace('$STY1$', c1)
+    .replace('$STY2$', c2)
+    .replace('$NAME1$', teamList[gm.t1].name)
+    .replace('$NAME2$', teamList[gm.t2].name)
+    .replace('$IDX$', idx)
 }

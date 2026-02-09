@@ -42,7 +42,6 @@
       }
     </script>
 
-    <link rel="preload" href="./assets/imgs/reset.svg" as="image" />
     <link rel="preload" href="./assets/imgs/settings.svg" as="image" />
     <link rel="preload" href="./assets/imgs/whistle.svg" as="image" />
     <link rel="preload" href="./assets/imgs/github.svg" as="image" />
@@ -132,8 +131,8 @@
       >
         +
       </button>
-      <button class="button flex-center bg-red" onclick="resetScores()">
-        <img src="./assets/imgs/reset.svg" />
+      <button class="button flex-center bg-dark" onclick="openGameEnd()">
+        END GAME
       </button>
       <button
         onclick="decScore(2)"
@@ -169,7 +168,7 @@
       >
         ×
       </button>
-      <div class="flex-center">
+      <div class="flex-center space-bottom">
         <h2 id="enter-score-text">Enter Score</h2>
 
         <input
@@ -193,6 +192,37 @@
       </div>
     </dialog>
 
+    <dialog id="game-end" class="bg-darker">
+      <button
+        class="close-button button bg-dark flex-center"
+        onclick="closeGameEnd()"
+      >
+        ×
+      </button>
+      <div class="flex-center space-bottom">
+        <h2 id="enter-score-text">End Game</h2>
+
+        <h4>Save score for current game?</h4>
+        <div id="game-end-score" class="setting-block">
+          Populated by template
+        </div>
+        <div class="button-group">
+          <button
+            class="button button-settings bg-dark"
+            onclick="endGame(false)"
+          >
+            No
+          </button>
+          <button
+            class="button button-settings bg-light"
+            onclick="endGame(true)"
+          >
+            Yes
+          </button>
+        </div>
+      </div>
+    </dialog>
+
     <dialog id="settings" class="bg-darker">
       <button
         class="close-button button bg-dark flex-center"
@@ -200,7 +230,7 @@
       >
         ×
       </button>
-      <div class="flex-center">
+      <div class="flex-center space-bottom">
         <h2>Settings</h2>
 
         <div class="setting-list">
@@ -274,7 +304,7 @@
       >
         ×
       </button>
-      <div class="flex-center">
+      <div class="flex-center space-bottom">
         <h2>Teams</h2>
 
         <div id="team-list" class="setting-list">Populated by template</div>
@@ -297,7 +327,7 @@
       >
         ×
       </button>
-      <div class="flex-center">
+      <div class="flex-center space-bottom">
         <h2>Games</h2>
 
         <div class="button-group">
@@ -359,6 +389,16 @@
           <button class="button button-delete" onclick="removeGame($IDX$)">
             ×
           </button>
+        </div>
+      </div>
+      <div id="game-template-single">
+        <div class="game-played">
+          <div col-idx="t$T1$" class="rounded score-team">$NAME1$</div>
+          <div>
+            <span class="p-1 $STY1$">$S1$</span> -
+            <span class="p-1 $STY2$">$S2$</span>
+          </div>
+          <div col-idx="t$T2$" class="rounded score-team">$NAME2$</div>
         </div>
       </div>
     </div>

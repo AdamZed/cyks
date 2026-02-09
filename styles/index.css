@@ -266,6 +266,10 @@ dialog {
   width: 150px;
 }
 
+.space-bottom {
+  margin-bottom: 20px;
+}
+
 @media (orientation: portrait) {
   .button-score {
     font-size: 6vw;
