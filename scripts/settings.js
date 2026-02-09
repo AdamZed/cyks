@@ -1,4 +1,5 @@
 let whistleOn = false
+let saveAll = false
 let scoreFont = 'Highway Gothic'
 let setCount = 'Disabled'
 let teamList = []
@@ -21,6 +22,7 @@ function loadSettings() {
   teamList = getTeamList()
   gameList = getGameList()
   whistleOn = (localStorage.getItem('whistle-on') ?? 'false') === 'true'
+  saveAll = (localStorage.getItem('saveall-on') ?? 'false') === 'true'
   scoreFont = localStorage.getItem('score-font') ?? 'Highway Gothic'
   setCount = localStorage.getItem('setswon-count') ?? 'Disabled'
   countSetWins()
@@ -195,6 +197,7 @@ function sumSetsTeam(teamWins) {
 
 function refreshSettings() {
   whistle.checked = whistleOn
+  saveall.checked = saveAll
   fontChoice.value = scoreFont
   setswonCount.value = setCount
 }
@@ -226,11 +229,18 @@ function updateWhistleState(checked) {
   localStorage.setItem('whistle-on', `${whistleOn}`)
 }
 
+function updateSaveAllState(checked) {
+  saveAll = checked
+  localStorage.setItem('saveall-on', `${saveAll}`)
+}
+
 function resetConfig() {
   whistleOn = false
+  saveAll = false
   scoreFont = 'Highway Gothic'
   setCount = 'Disabled'
   localStorage.setItem('whistle-on', `${whistleOn}`)
+  localStorage.setItem('saveall-on', `${saveAll}`)
   localStorage.setItem('score-font', scoreFont)
   localStorage.setItem('setswon-count', setCount)
 

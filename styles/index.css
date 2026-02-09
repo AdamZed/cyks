@@ -197,6 +197,10 @@ dialog {
 .text-green {
   color: rgb(29, 203, 29);
 }
+.version {
+  color: rgb(150, 150, 150);
+  font-weight: 600;
+}
 
 .setting-block {
   padding: 10px;

@@ -10,6 +10,7 @@ let setswonCount = document.getElementById('setswon-count')
 let fontChoice = document.getElementById('font-choice')
 
 let whistle = document.getElementById('whistle-onoff')
+let saveall = document.getElementById('saveall-onoff')
 
 let currTeamScoreSet = 0
 
@@ -43,7 +44,8 @@ function openGameEnd() {
     s2: score[1],
   })
   redrawTeams()
-  gameEnder.showModal()
+  if (saveAll) endGame(true)
+  else gameEnder.showModal()
 }
 function closeGameEnd() {
   gameEnder.close()

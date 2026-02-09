@@ -209,15 +209,21 @@
         <div class="button-group">
           <button
             class="button button-settings bg-dark"
+            onclick="closeGameEnd()"
+          >
+            Cancel
+          </button>
+          <button
+            class="button button-settings bg-dark"
             onclick="endGame(false)"
           >
-            No
+            Don't Save
           </button>
           <button
             class="button button-settings bg-light"
             onclick="endGame(true)"
           >
-            Yes
+            Save
           </button>
         </div>
       </div>
@@ -243,6 +249,18 @@
                 id="whistle-onoff"
                 name="whistle-onoff"
                 onchange="updateWhistleState(this.checked)"
+              />
+            </div>
+          </div>
+          <h3>End Game</h3>
+          <div class="bg-dark setting-block">
+            <div class="setting-option">
+              <label for="saveall-onoff">Save All Games</label>
+              <input
+                type="checkbox"
+                id="saveall-onoff"
+                name="saveall-onoff"
+                onchange="updateSaveAllState(this.checked)"
               />
             </div>
           </div>
@@ -294,6 +312,7 @@
         >
           <img src="./assets/imgs/github.svg" />
         </a>
+        <div class="text-sm version">2.7.1</div>
       </div>
     </dialog>
 
