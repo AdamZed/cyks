@@ -103,3 +103,20 @@ function gameTemplate(gm, idx = -1) {
     .replace('$NAME2$', teamList[gm.t2].name)
     .replace('$IDX$', idx)
 }
+
+function copyGamesToClipboard() {
+  try {
+    navigator.clipboard.writeText(
+      gameList
+        .map((gm, _) => {
+          let s1 = gm.s1 > gm.s2 ? `[${gm.s1}]` : `${gm.s1}`
+          let s2 = gm.s2 > gm.s1 ? `[${gm.s2}]` : `${gm.s2}`
+          return `${teamList[gm.t1].name} ${s1} - ${s2} ${teamList[gm.t2].name}`
+        })
+        .join('\n'),
+    )
+    alert('Game results copied to clipboard')
+  } catch {
+    alert('Failed to copy')
+  }
+}
